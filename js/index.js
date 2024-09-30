@@ -1,4 +1,4 @@
-import { initializeViewNavigation } from "../../KinoFrontend/js/router.js";
+import { initializeViewNavigation } from "/js/router.js";
 
 document.addEventListener("DOMContentLoaded", initApp);
 
