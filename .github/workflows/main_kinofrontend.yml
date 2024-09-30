@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '12'  # Juster Node.js versionen efter behov
+          node-version: '16'  # Juster Node.js versionen efter behov
 
       - name: Install dependencies
         run: npm install
