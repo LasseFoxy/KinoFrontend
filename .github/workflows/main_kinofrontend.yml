@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '16'  # Juster Node.js versionen efter behov
 
@@ -25,8 +25,8 @@ jobs:
         run: npm run build  # Sørg for at have en build script i package.json
 
       - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v2  # Dette er korrekt version for Azure deploy
         with:
-          app-name: '<din-frontend-app-service-navn>'  # Indsæt jeres app service navn
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Gem dette i GitHub Secrets
-          package: './build'  # Standard build directory (juster hvis nødvendigt)
+          app-name: 'KinoFrontend'  # Din app service navn
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Secrets til deployment
+          package: './build'  # Juster build-sti, hvis nødvendigt
