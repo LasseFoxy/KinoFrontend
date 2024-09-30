@@ -3,7 +3,7 @@ name: Frontend CI/CD
 on:
   push:
     branches:
-      - main  # Kør når der pushes til main branch
+      - main
 
 jobs:
   build-and-deploy:
@@ -13,20 +13,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'  # Juster Node.js versionen efter behov
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build  # Sørg for at have en build script i package.json
-
       - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2  # Dette er korrekt version for Azure deploy
+        uses: azure/webapps-deploy@v2
         with:
-          app-name: 'KinoFrontend'  # Din app service navn
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Secrets til deployment
-          package: './build'  # Juster build-sti, hvis nødvendigt
+          app-name: 'KinoFrontend'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: '.'
