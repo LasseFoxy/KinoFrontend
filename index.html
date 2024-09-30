@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <title>SPA Template</title>
+  </head>
+
+  <body>
+    <!-- Navigation Bar -->
+    <nav aria-label="Main navigation">
+      <a href="#home" class="view-link">Home</a>
+      <a href="#about" class="view-link">About</a>
+      <a href="#mytab" class="view-link">My Tab</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Each section corresponds to a view -->
+      <section id="home" class="view-content">
+        <header>
+          <h2>Home</h2>
+        </header>
+        <p>Welcome to the homepage. This is where the main content resides.</p>
+      </section>
+
+      <section id="about" class="view-content">
+        <header>
+          <h2>About</h2>
+        </header>
+        <p>
+          Learn more about us on this page. We provide interesting details here.
+        </p>
+      </section>
+
+      <section id="mytab" class="view-content">
+        <header>
+          <h2>My Tab</h2>
+        </header>
+        <p>
+          Explore the contents of My Tab. Personalize this view with your data.
+        </p>
+      </section>
+    </main>
+
+    <!-- This loads javascript with type = "module" which allows us to use ES6 modules. -->
+    <script src="../KinoFrontend/js/index.js" type="module"></script>
+  </body>
+</html>
