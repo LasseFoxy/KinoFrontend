@@ -6,7 +6,7 @@ html {
   padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: black;
+  background-color: rgba(11, 11, 16, 0.92);
 }
 
 /* ---------- nav styling ---------- */
@@ -25,19 +25,19 @@ nav {
   z-index: 100;
 }
 
-/* Left section (Home button) */
+/* left section (Home button) */
 nav .nav-left {
   text-align: left;
 }
 
-/* Center section (Billetter, Film, Admin) */
+/* center section (Tickets, Movies, Admin) */
 nav .nav-center {
   display: flex;
   justify-content: center;
   gap: 40px; /* Spacing between center buttons */
 }
 
-/* Right section (Login) */
+/* Right Section (Login) */
 nav .nav-right {
   text-align: right;
 }
@@ -64,19 +64,23 @@ nav a.active {
   color: #a944dc;
 }
 
-/* ---------- view content styling ---------- */
+/* ---------- View Content Styling ---------- */
 .view-content {
   display: none;
-  padding: 248px 2em;
+  padding: 2em;
   color: white;
-}
-
-@media (min-width: 600px) {
-  .view-content {
-    padding: 6em 2em;
-  }
+  margin-top: 70px;
+  text-align: center;
 }
 
 .view-content.active {
   display: block;
+}
+
+/* Adjust view-content margin on larger screens */
+@media (min-width: 600px) {
+  .view-content {
+    padding: 4em 2em;
+    margin-top: 80px;
+  }
 }
