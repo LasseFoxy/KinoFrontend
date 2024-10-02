@@ -1,51 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/styles.css" />
-    <title>SPA Template</title>
-  </head>
+    <title>Kickback Kino</title>
+</head>
 
-  <body>
-    <!-- Navigation Bar -->
-    <nav aria-label="Main navigation">
-      <a href="#home" class="view-link">Home</a>
-      <a href="#about" class="view-link">About</a>
-      <a href="#mytab" class="view-link">My Tab</a>
-    </nav>
+<body>
+<!-- Navigation Bar -->
+<nav aria-label="Main navigation">
+    <div class="nav-left">
+        <a href="#home" class="view-link">Kickback Kino</a>
+    </div>
+    <div class="nav-center">
+        <a href="#home" class="view-link">Billetter</a>
+        <a href="#film" class="view-link">Film</a>
+        <a href="#admin" class="view-link">Admin</a>
+    </div>
+    <div class="nav-right">
+        <a href="#login" class="view-link">Login</a>
+    </div>
+</nav>
 
-    <!-- Main Content -->
-    <main>
-      <!-- Each section corresponds to a view -->
-      <section id="home" class="view-content">
+<!-- Main Content -->
+<main>
+    <section id="home" class="view-content active">
         <header>
-          <h2>Home</h2>
+            <h2>Startside/Billetter</h2>
         </header>
-        <p>Welcome to the homepage. This is where the main content resides.</p>
-      </section>
+        <p>Oversigt over filmvisninger</p>
+    </section>
 
-      <section id="about" class="view-content">
+    <section id="film" class="view-content">
         <header>
-          <h2>About</h2>
+            <h2>Film</h2>
         </header>
-        <p>
-          Learn more about us on this page. We provide interesting details here.
-        </p>
-      </section>
+        <p>Se hvilke film, der vises i biografen.</p>
+    </section>
 
-      <section id="mytab" class="view-content">
+    <section id="admin" class="view-content">
         <header>
-          <h2>My Tab</h2>
+            <h2>Admin</h2>
         </header>
-        <p>
-          Explore the contents of My Tab. Personalize this view with your data.
-        </p>
-      </section>
-    </main>
+        <p>Administrator relaterede funktioner.</p>
+    </section>
 
-    <!-- This loads javascript with type = "module" which allows us to use ES6 modules. -->
-    <script src="/js/index.js" type="module"></script>
-  </body>
+    <section id="login" class="view-content">
+        <header>
+            <h2>Login</h2>
+        </header>
+        <p>Login formular.</p>
+    </section>
+</main>
+
+<script src="/js/index.js" type="module"></script>
+</body>
 </html>
