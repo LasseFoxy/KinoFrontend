@@ -6,50 +6,69 @@ html {
   padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: rgb(235, 235, 235);
+  background-color: black;
 }
 
 /* ---------- nav styling ---------- */
 nav {
-  display: grid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   text-align: center;
   font-weight: bold;
+  background-color: transparent;
+  padding: 1em 2em;
+  z-index: 100;
 }
 
-@media (min-width: 600px) {
-  nav {
-    padding: 1em 2em;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
+/* Left section (Home button) */
+nav .nav-left {
+  text-align: left;
 }
 
+/* Center section (Billetter, Film, Admin) */
+nav .nav-center {
+  display: flex;
+  justify-content: center;
+  gap: 40px; /* Spacing between center buttons */
+}
+
+/* Right section (Login) */
+nav .nav-right {
+  text-align: right;
+}
+
+/* Styling for all nav links */
 nav a {
-  display: inline-block;
-  color: black;
-  text-align: center;
-  padding: 20px 16px;
+  color: #a944dc;
   text-decoration: none;
-  letter-spacing: 0.1em;
   text-transform: uppercase;
+  padding: 10px 20px;
+  letter-spacing: 0.1em;
+  font-size: 22px;
+  transition: background-color 0.3s ease;
 }
 
 nav a:hover {
   background-color: rgb(68, 68, 68);
   color: white;
+  border-radius: 5px;
 }
 
 nav a.active {
-  background-color: black;
-  color: white;
+  background-color: transparent;
+  color: #a944dc;
 }
 
+/* ---------- view content styling ---------- */
 .view-content {
   display: none;
   padding: 248px 2em;
+  color: white;
 }
 
 @media (min-width: 600px) {
@@ -61,6 +80,3 @@ nav a.active {
 .view-content.active {
   display: block;
 }
-
-/* ---------- Other styling ---------- */
-/* Other styling goes here or in a new css file */
