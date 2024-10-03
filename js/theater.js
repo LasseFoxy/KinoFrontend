@@ -12,8 +12,8 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
     // Opret JSON objekt med biografsalens information
     const theaterData = {
         name: theaterName,
-        number_of_rows: parseInt(numberOfRows, 10),
-        seats_per_row: parseInt(seatsPerRow, 10)
+        numberOfRows: parseInt(numberOfRows, 10),
+        seatsPerRow: parseInt(seatsPerRow, 10)
     };
 
     // Skelne mellem oprettelse og opdatering
@@ -67,8 +67,8 @@ function loadTheaterData(id) {
         .then(data => {
             // Udfyld formularen med de eksisterende data
             document.getElementById("theaterName").value = data.name;
-            document.getElementById("numberOfRows").value = data.number_of_rows;
-            document.getElementById("seatsPerRow").value = data.seats_per_row;
+            document.getElementById("numberOfRows").value = data.numberOfRows;
+            document.getElementById("seatsPerRow").value = data.seatsPerRow;
 
             // Sæt theaterId til det opdaterede ID
             theaterId = id;
