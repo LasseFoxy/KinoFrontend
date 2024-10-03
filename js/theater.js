@@ -18,7 +18,7 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
 
     // Skelne mellem oprettelse og opdatering
     const method = theaterId ? 'PUT' : 'POST';
-    const url = theaterId ? `http://localhost:8080/theaters/${theaterId}` : 'http://localhost:8080/theaters';
+    const url = theaterId ? `http://localhost:8080/theater/${theaterId}` : 'http://localhost:8080/theater';
 
     // Send request til backend API
     fetch(url, {
