@@ -18,7 +18,7 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
 
     // Skelne mellem oprettelse og opdatering
     const method = theaterId ? 'PUT' : 'POST';
-    const url = theaterId ? `http://localhost:8080/theater/${theaterId}` : 'http://localhost:8080/theater';
+    const url = theaterId ? `http://localhost:8080/api/theater/${theaterId}` : 'http://localhost:8080/api/theater';
 
     // Send request til backend API
     fetch(url, {
@@ -57,7 +57,7 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
 // Funktion til at indlæse data for en biografsal, når den skal opdateres
 function loadTheaterData(id) {
     // Hent data for en biografsal ved ID
-    fetch(`http://localhost:8080/theaters/${id}`)
+    fetch(`http://localhost:8080/api/theater/${id}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Fejl ved hentning af biografsal');
