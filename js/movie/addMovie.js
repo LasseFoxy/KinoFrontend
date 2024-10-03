@@ -1,45 +1,54 @@
-$(document).ready(function() {
-    // Når dokumentet er klar
-    $('#uploadImageBtn').on('click', function(e) {
-        e.preventDefault();  // Forhindrer standard formular-indsending
+document.addEventListener("DOMContentLoaded", function () {
+    const movieForm = document.getElementById('movieForm');
+    const submitMovieBtn = document.getElementById('submitMovieBtn');
+    const fileInput = document.getElementById('image');
 
-        var formData = new FormData();  // Opretter et FormData-objekt til fil-upload
-        var fileInput = $('#image')[0];  // Henter file input-elementet
-        var file = fileInput.files[0];  // Henter den første valgte fil
+    movieForm.addEventListener('submit', function (e) {
+        e.preventDefault();  // Prevent form submission
 
-        if (file) {
-            formData.append("image", file);  // Tilføjer filen til FormData-objektet
+        const newMovie = {
+            title: document.getElementById('title').value,  // Movie title
+            description: document.getElementById('description').value,  // Movie description
+            genre: document.getElementById('genre').value,  // Movie genre
+            duration: {
+                hours: document.getElementById('hours').value,
+                minutes: document.getElementById('minutes').value
+            },
+            PGRating: document.getElementById('PGRating').value  // Age rating
+        };
 
-            // Send filen via AJAX
-            $.ajax({
-                url: '/api/v1/movie/upload-image',  // API-endpoint for upload
-                type: 'POST',
-                data: formData,
-                processData: false,  // Forhindrer jQuery i at bearbejde dataene
-                contentType: false,  // Forhindrer jQuery i at sætte contentType
-                success: function(response) {
-                    console.log('Image uploaded successfully!', response);
-                    alert('Image uploaded!');
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error uploading image:', error);
-                    alert('Error uploading image!');
+        const movieUrl = '/api/v1/movie';
+
+        // Create FormData to include the image file
+        const formData = new FormData();
+        formData.append('movie', JSON.stringify(newMovie));  // Add movie data
+        formData.append('image', fileInput.files[0]);  // Add the selected image
+
+        // Send the movie data along with the image
+        fetch(movieUrl, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to add movie');
                 }
+                return response.json();
+            })
+            .then(movieData => {
+                console.log('Movie added:', movieData);
+                alert('Movie added successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error adding movie!');
             });
-        } else {
-            alert('Please select an image before submitting!');
-        }
     });
 
-    // Lytter efter ændringer i fil-input og opdaterer fil-tælleren
-    $('#image').on('change', function() {
-        var fileCount = this.files.length;  // Får antallet af valgte filer
-
-        // Opdaterer fil-tælleren tekst
-        if (fileCount === 0) {
-            $('#fileCount').text("No files chosen");
-        } else {
-            $('#fileCount').text(fileCount + " file(s) chosen");
-        }
+    // Handle file input changes
+    fileInput.addEventListener('change', function () {
+        const fileCount = this.files.length;
+        const fileCountText = fileCount === 0 ? "No files chosen" : `${fileCount} file(s) chosen`;
+        document.getElementById('fileCount').textContent = fileCountText;
     });
 });
