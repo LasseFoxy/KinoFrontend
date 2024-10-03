@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/styles.css" />
     <link rel="stylesheet" href="/styles/adminPage.css" />
+    <link rel="stylesheet" href="/styles/seatSelectorCSS.css" />
     <title>Kickback Kino</title>
 </head>
 
@@ -32,6 +33,35 @@
             <h2>Startside/Billetter</h2>
         </header>
         <p>Oversigt over filmvisninger</p>
+        <!-- Movies Container -->
+        <div id="movies-container" class="container-visible movies-container">
+
+        </div>
+
+        <!-- Seat Selection Container -->
+        <div id="seat-selector-container" class="container">
+            <h1>Seat Selection</h1>
+            <h2 id="movie-subtitle"></h2>
+            <label for="customer-name">Customer Name:</label>
+            <input type="text" id="customer-name" placeholder="Enter your name" required>
+            <label for="num-tickets">Number of Tickets:</label>
+            <input type="number" id="num-tickets" min="1" max="10" value="1">
+            <div id="seats-container" ></div>
+            <button id="back-to-frontpage-tickets">Back To Frontpage</button>
+            <button id="confirm-booking">Confirm Booking</button>
+        </div>
+
+        <div id="confirmation-container" class="container">
+            <h1>Booking Confirmation</h1>
+            <p id="confirmation-message"></p>
+            <button id="return-movie-chooser">Return to Movie Selection</button>
+        </div>
+
+        <script src="/js/movies.js" type="module"></script>
+        <script src="/js/tickets.js" type="module"></script>
+        <script src="/js/confirmation.js" type="module"></script>
+
+
     </section>
 
     <!-- Movies Section -->
@@ -40,6 +70,7 @@
             <h2>Film</h2>
         </header>
         <p>Se hvilke film, der vises i biografen.</p>
+
     </section>
 
     <!-- Admin Section -->
@@ -88,9 +119,12 @@
         </header>
         <p>Login formular.</p>
     </section>
+
 </main>
 
 <!-- Javascript to handle SPA routing -->
 <script src="/js/index.js" type="module"></script>
+
+
 </body>
 </html>
