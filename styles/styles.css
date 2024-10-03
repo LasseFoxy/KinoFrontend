@@ -6,7 +6,7 @@ html {
   padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: rgba(11, 11, 16, 0.92);
+  background-color: black;
 }
 
 /* ---------- nav styling ---------- */
@@ -44,19 +44,21 @@ nav .nav-right {
 
 /* Styling for all nav links */
 nav a {
-  color: #a944dc;
+  color: #c668f3;
   text-decoration: none;
   text-transform: uppercase;
   padding: 10px 20px;
   letter-spacing: 0.1em;
   font-size: 22px;
-  transition: background-color 0.3s ease;
+  transition: color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 6px; /* Rounded edges for a more modern look */
 }
 
-nav a:hover {
-  background-color: rgb(68, 68, 68);
+/* Hover effect without background before hover */
+nav a:hover, nav a.active:hover {
+  background-color: #a944dc;
   color: white;
-  border-radius: 5px;
+  box-shadow: 0 4px 10px rgb(167, 56, 220);
 }
 
 nav a.active {
@@ -83,4 +85,58 @@ nav a.active {
     padding: 4em 2em;
     margin-top: 80px;
   }
+}
+
+/* ---------- Form Styling ---------- */
+.form-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 25px;
+  background-color: #1a1a2e;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #a944dc;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #333;
+  border-radius: 6px;
+  background-color: #2a2a40;
+  color: white;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #a944dc;
+  background-color: #3a3a55;
+  outline: none;
+}
+
+/* ---------- Button Styling ---------- */
+.btn-primary {
+  background-color: #a944dc;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: #8734b8;
+  box-shadow: 0 6px 15px rgba(167, 68, 220, 0.4);
 }
