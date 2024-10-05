@@ -12,13 +12,13 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
     // Opret JSON objekt med biografsalens information
     const theaterData = {
         name: theaterName,
-        number_of_rows: parseInt(numberOfRows, 10),
-        seats_per_row: parseInt(seatsPerRow, 10)
+        numberOfRows: parseInt(numberOfRows, 10),
+        seatsPerRow: parseInt(seatsPerRow, 10)
     };
 
     // Skelne mellem oprettelse og opdatering
     const method = theaterId ? 'PUT' : 'POST';
-    const url = theaterId ? `http://localhost:8080/theaters/${theaterId}` : 'http://localhost:8080/theaters';
+    const url = theaterId ? `http://localhost:8080/api/theater/${theaterId}` : 'http://localhost:8080/api/theater';
 
     // Send request til backend API
     fetch(url, {
@@ -57,7 +57,7 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
 // Funktion til at indlæse data for en biografsal, når den skal opdateres
 function loadTheaterData(id) {
     // Hent data for en biografsal ved ID
-    fetch(`http://localhost:8080/theaters/${id}`)
+    fetch(`http://localhost:8080/api/theater/${id}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Fejl ved hentning af biografsal');
@@ -67,8 +67,8 @@ function loadTheaterData(id) {
         .then(data => {
             // Udfyld formularen med de eksisterende data
             document.getElementById("theaterName").value = data.name;
-            document.getElementById("numberOfRows").value = data.number_of_rows;
-            document.getElementById("seatsPerRow").value = data.seats_per_row;
+            document.getElementById("numberOfRows").value = data.numberOfRows;
+            document.getElementById("seatsPerRow").value = data.seatsPerRow;
 
             // Sæt theaterId til det opdaterede ID
             theaterId = id;
