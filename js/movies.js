@@ -5,8 +5,8 @@ export class Movies {
         this.bookingDetails = {
             movieTitle: null,
             time: null,
-            theatreId: null,
-            showtimeId: null,
+            theaterId: null,
+            showingId: null,
             seatIds: []
         };
         this.moviesContainer = document.getElementById('movies-container');
@@ -15,7 +15,7 @@ export class Movies {
 
     // Fetch and display movies with showtimes
     fetchAndDisplayMovies() {
-        fetch('http://localhost:8080/api/movies')
+        fetch('http://localhost:8080/api/movie/movieDTOs')
             .then(response => response.json())
             .then(movies => {
                 this.moviesContainer.innerHTML = '';  // Clear any existing content
@@ -42,43 +42,43 @@ export class Movies {
         movieDiv.appendChild(posterImg);
         movieDiv.appendChild(titleElement);
 
-        movie.showtimes.forEach(showtime => {
-            const showtimeDiv = document.createElement('div');
-            showtimeDiv.classList.add('showtime');
+        movie.showings.forEach(showing => {
+            const showingDiv = document.createElement('div');
+            showingDiv.classList.add('showing');
 
             // Use the formatShowtime function to format the showtime
-            const formattedShowtime = formatShowtime(showtime.showtime, showtime.theatreName);
+            const formattedShowing = formatShowing(showing.startTime, showing.theaterName);
 
-            showtimeDiv.innerText = formattedShowtime;
-            showtimeDiv.dataset.time = showtime.showtime;
-            showtimeDiv.dataset.movie = movie.title;
-            showtimeDiv.dataset.theatreId = showtime.theatreId;
-            showtimeDiv.dataset.showtimeId = showtime.showtimeId;
+            showingDiv.innerText = formattedShowing;
+            showingDiv.dataset.startTime = showing.startTime;
+            showingDiv.dataset.movie = movie.title;
+            showingDiv.dataset.theaterId = showing.theaterId;
+            showingDiv.dataset.showingId = showing.showingId;
 
-            movieDiv.appendChild(showtimeDiv);
+            movieDiv.appendChild(showingDiv);
         });
 
         this.moviesContainer.appendChild(movieDiv);
     }
 
     // Function to handle clicking on a showtime
-    handleShowtimeClick(e) {
-        if (e.target.classList.contains('showtime')) {
+    handleShowingClick(e) {
+        if (e.target.classList.contains('showing')) {
             const selectedTime = e.target.dataset.time;
             const selectedMovie = e.target.dataset.movie;
-            const theatreId = e.target.dataset.theatreId;
-            const showtimeId = e.target.dataset.showtimeId;
+            const theaterId = e.target.dataset.theaterId;
+            const showingId = e.target.dataset.showingId;
 
             // Call redirectToSeatSelection with the selected details
-            this.redirectToSeatSelection(selectedMovie, selectedTime, theatreId, showtimeId);
+            this.redirectToSeatSelection(selectedMovie, selectedTime, theaterId, showingId);
         }
     }
 
     // This function transitions to the seat selection page
-    redirectToSeatSelection(movieTitle, time, theatreId, showtimeId) {
+    redirectToSeatSelection(movieTitle, time, theaterId, showingId) {
         clearSelectedSeats();
         // Set booking details based on movie selection
-        this.setBookingDetails(movieTitle, time, theatreId, showtimeId);
+        this.setBookingDetails(movieTitle, time, theaterId, showingId);
 
         // Switch to the seat selection container
         switchContainer('seat-selector-container');
@@ -92,11 +92,11 @@ export class Movies {
     }
 
     // Set booking details when transitioning from the movie selection page
-    setBookingDetails(movieTitle, time, theatreId, showtimeId) {
+    setBookingDetails(movieTitle, time, theaterId, showingId) {
         this.bookingDetails.movieTitle = movieTitle;
         this.bookingDetails.time = time;
-        this.bookingDetails.theatreId = theatreId;
-        this.bookingDetails.showtimeId = showtimeId;
+        this.bookingDetails.theaterId = theaterId;
+        this.bookingDetails.showingId = showingId;
         console.log("Booking Details:", this.bookingDetails);
     }
 }
@@ -104,7 +104,7 @@ export class Movies {
 // Initialize Movies class and set up event listeners
 const movies = new Movies();
 document.addEventListener('click', (e) =>
-    movies.handleShowtimeClick(e),
+    movies.handleShowingClick(e),
 );
 
 function switchContainer(containerId) {
@@ -123,11 +123,11 @@ function switchContainer(containerId) {
 }
 
 // Function to format the date and time to show only the time and theater name
-function formatShowtime(fullDateTime, theatreName) {
+function formatShowing(fullDateTime, theaterName) {
     const date = new Date(fullDateTime); // Convert to a Date object
     const hours = String(date.getHours()).padStart(2, '0'); // Get hours and pad with 0 if needed
     const minutes = String(date.getMinutes()).padStart(2, '0'); // Get minutes and pad with 0 if needed
-    return `${hours}:${minutes} at ${theatreName}`;
+    return `${hours}:${minutes} at ${theaterName}`;
 }
 
 // Track selected seats in an array

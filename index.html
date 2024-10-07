@@ -34,15 +34,6 @@
             <h2>Startside/Billetter</h2>
         </header>
         <p>Oversigt over filmvisninger</p>
-    </section>
-
-    <!-- Movies Section -->
-    <section id="movies" class="view-content">
-        <header>
-            <h2>Film</h2>
-        </header>
-        <p>Se hvilke film, der vises i biografen.</p>
-
         <div id="movies-container" class="container-visible movies-container">
 
         </div>
@@ -65,10 +56,18 @@
             <p id="confirmation-message"></p>
             <button id="return-movie-chooser">Return to Movie Selection</button>
         </div>
+    </section>
 
-        <script src="/js/movies.js" type="module"></script>
-        <script src="/js/tickets.js" type="module"></script>
-        <script src="/js/confirmation.js" type="module"></script>
+    <!-- Movies Section -->
+    <section id="movies" class="view-content">
+        <header>
+            <h2>Film</h2>
+        </header>
+        <p>Se hvilke film, der vises i biografen.</p>
+
+
+
+
 
     </section>
 
@@ -154,6 +153,9 @@
 <!-- Javascript to handle SPA routing -->
 <script src="/js/index.js" type="module"></script>
 <script src="/js/theater.js"></script> <!-- Theater.js håndterer form-logikken -->
+<script src="/js/movies.js" type="module"></script>
+<script src="/js/tickets.js" type="module"></script>
+<script src="/js/confirmation.js" type="module"></script>
 
 </body>
 </html>
