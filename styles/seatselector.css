@@ -1,0 +1,142 @@
+.movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Adds spacing between items */
+}
+
+.movie {
+    width: 22%; /* Adjust width to fit 4 movies in a row */
+    margin-bottom: 20px; /* Add some space between rows */
+}
+
+.movie img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+}
+
+.showtime {
+    margin: 10px 0;
+    padding: 8px;
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+}
+.showtime:hover {
+    background-color: #6c7ae0;
+}
+
+.container {
+    display: none; /* Initially hide all containers */
+}
+
+/* Visible container */
+.visible {
+    display: block; /* Show the visible container */
+}
+
+/* Button styles */
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* General styles for the seat layout */
+#seats-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Style for each seat row */
+.seat-row {
+    display: flex;
+    gap: 5px; /* Spacing between each seat */
+}
+
+/* Base style for seats */
+.seat {
+    width: 40px; /* Adjust the width of each seat */
+    height: 40px; /* Adjust the height of each seat */
+    margin: 5px;
+    background-color: green;  /* Default color for available seats */
+    text-align: center;
+    line-height: 40px;  /* Aligns the seat number vertically */
+    cursor: pointer;
+    border-radius: 5px; /* Optional rounded corners */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: white;  /* Seat number color */
+    user-select: none; /* Prevent text selection */
+    border: 2px solid #ddd; /* Border for a subtle 3D effect */
+    transition: transform 0.2s ease; /* Smooth scaling on hover */
+}
+
+/* Seat hover effect */
+.seat:hover {
+    transform: scale(1.1); /* Slightly increase the size when hovering */
+    border-color: #999;
+}
+
+/* Style for occupied seats */
+.seat.occupied {
+    background-color: red !important;  /* Red for occupied seats */
+    cursor: not-allowed;  /* Prevent clicking on occupied seats */
+}
+
+/* Style for selected seats */
+.seat.selected {
+    background-color: blue !important;  /* Blue for selected seats */
+    border-color: #0000ff;  /* Optional border color change */
+}
+
+/* Optional style for disabled seats that are booked */
+.seat.disabled {
+    background-color: grey; /* Gray for disabled seats */
+    cursor: not-allowed;
+}
+
+/* For better readability, add spacing around the main seat container */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Movie subtitle styling */
+#movie-subtitle {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Button styles for confirmation */
+button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

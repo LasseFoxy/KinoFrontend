@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/styles.css" />
     <link rel="stylesheet" href="/styles/adminPage.css" />
+    <link rel="stylesheet" href="/styles/seatselector.css" />
+    <link rel="stylesheet" href="/styles/scheduleShowings.css" />
     <title>Kickback Kino</title>
 </head>
 
@@ -12,6 +14,7 @@
 <!-- Navigation Bar -->
 <nav aria-label="Main navigation">
     <div class="nav-left">
+        <!-- Home button, aligned to the left -->
         <a href="#home" class="view-link">Kickback Kino</a>
     </div>
     <div class="nav-center">
@@ -40,6 +43,28 @@
             <h2>Film</h2>
         </header>
         <p>Se hvilke film, der vises i biografen.</p>
+
+        <div id="movies-container" class="movies-container"></div>
+    </section>
+
+    <!-- Seat Selection Section -->
+    <section id="seat-selection" class="view-content">
+        <h1>Seat Selection</h1>
+        <h2 id="movie-subtitle"></h2>
+        <label for="customer-name">Customer Name:</label>
+        <input type="text" id="customer-name" placeholder="Enter your name" required />
+        <label for="num-tickets">Number of Tickets:</label>
+        <input type="number" id="num-tickets" min="1" max="10" value="1" />
+        <div id="seats-container"></div>
+        <button id="back-to-frontpage-tickets">Back To Frontpage</button>
+        <button id="confirm-booking">Confirm Booking</button>
+    </section>
+
+    <!-- Confirmation Section -->
+    <section id="confirmation" class="view-content">
+        <h1>Booking Confirmation</h1>
+        <p id="confirmation-message"></p>
+        <button id="return-movie-chooser">Return to Movie Selection</button>
     </section>
 
     <!-- Admin Section -->
@@ -52,8 +77,8 @@
             <div class="admin-section">
                 <h3>Sale</h3>
                 <div class="admin-btn-container">
-                    <button class="admin-btn">Opret Sal</button>
-                    <button class="admin-btn">Rediger Sal</button>
+                    <a href="#theater" class="admin-btn">Opret Biografsal</a>
+                    <button class="admin-btn" onclick="loadTheaterData(1)">Rediger Sal</button>
                     <button class="admin-btn">Slet Sal</button>
                 </div>
             </div>
@@ -65,7 +90,7 @@
                     <button class="admin-btn">Tilføj Film</button>
                     <button class="admin-btn">Rediger Film</button>
                     <button class="admin-btn">Slet Film</button>
-                    <button class="admin-btn">Skemalæg visninger</button>
+                    <a href="#schedule-showings" class="admin-btn view-link" id="scheduleShowingsButton">Skemalæg visninger</a>
                 </div>
             </div>
 
@@ -81,6 +106,52 @@
         </div>
     </section>
 
+    <!-- Schedule Showings Section -->
+    <section id="schedule-showings" class="view-content">
+        <header>
+            <h2>Skemalæg Visninger</h2>
+        </header>
+        <label for="movieSelect">Vælg film:</label>
+        <select id="movieSelect"></select>
+
+        <label for="theaterSelect">Vælg biograf:</label>
+        <select id="theaterSelect"></select>
+
+        <div id="showings-container"></div>
+
+        <button id="prevWeekButton">Forrige uge</button>
+        <button id="nextWeekButton">Næste uge</button>
+
+        <button id="addShowingsButton" class="admin-btn">Tilføj film til valgte visninger</button>
+    </section>
+
+    <!-- Theater Section -->
+    <section id="theater" class="view-content">
+        <header>
+            <h2>Opret eller Opdater Biografsal</h2>
+        </header>
+        <div class="form-container">
+            <h1 id="formTitle">Opret Biografsal</h1>
+            <form id="theaterForm">
+                <input type="hidden" id="theaterId" name="theaterId" />
+                <div class="form-group">
+                    <label for="theaterName" class="form-label">Biografsalens navn:</label>
+                    <input type="text" id="theaterName" name="theaterName" required />
+                </div>
+                <div class="form-group">
+                    <label for="numberOfRows" class="form-label">Antal rækker:</label>
+                    <input type="number" id="numberOfRows" name="numberOfRows" required />
+                </div>
+                <div class="form-group">
+                    <label for="seatsPerRow" class="form-label">Sæder per række:</label>
+                    <input type="number" id="seatsPerRow" name="seatsPerRow" required />
+                </div>
+                <button type="submit" id="submitButton" class="btn-primary">Gem biografsal</button>
+            </form>
+            <p id="message" class="mt-3"></p>
+        </div>
+    </section>
+
     <!-- Login Section -->
     <section id="login" class="view-content">
         <header>
@@ -90,7 +161,12 @@
     </section>
 </main>
 
-<!-- Javascript to handle SPA routing -->
+<!-- Javascript files at the bottom -->
+<script src="/js/movies.js" type="module"></script>
+<script src="/js/tickets.js" type="module"></script>
+<script src="/js/confirmation.js" type="module"></script>
 <script src="/js/index.js" type="module"></script>
+<script src="/js/theater.js" type="module"></script>
+<script src="/js/scheduleShowings.js" type="module"></script>
 </body>
 </html>
