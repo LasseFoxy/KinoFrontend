@@ -82,3 +82,26 @@ function loadTheaterData(id) {
             document.getElementById("message").classList.add("alert", "alert-danger");
         });
 }
+document.getElementById("deleteTheaterButton").addEventListener("click", function() {
+    const theaterId = prompt("Indtast id på sal der ønskes slettet:");
+    if (theaterId) {
+        deleteTheater(theaterId);
+    }
+});
+
+function deleteTheater(id) {
+    fetch(`http://localhost:8080/api/theater/${id}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Fejl ved sletning af biografsal');
+            }
+            document.getElementById("message").textContent = "Biografsal slettet succesfuldt!";
+            document.getElementById("message").classList.add("alert", "alert-success");
+        })
+        .catch(error => {
+            document.getElementById("message").textContent = "Der opstod en fejl: " + error.message;
+            document.getElementById("message").classList.add("alert", "alert-danger");
+        });
+}
