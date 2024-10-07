@@ -38,34 +38,28 @@
     </section>
 
     <!-- Movies Section -->
-    <section id="movies" class="view-content">
-        <header>
-            <h2>Film</h2>
-        </header>
-        <p>Se hvilke film, der vises i biografen.</p>
+    <div id="movies-container" class="container-visible movies-container">
 
-        <div id="movies-container" class="movies-container"></div>
-    </section>
+    </div>
 
-    <!-- Seat Selection Section -->
-    <section id="seat-selection" class="view-content">
+    <!-- Seat Selection Container -->
+    <div id="seat-selector-container" class="container">
         <h1>Seat Selection</h1>
         <h2 id="movie-subtitle"></h2>
         <label for="customer-name">Customer Name:</label>
-        <input type="text" id="customer-name" placeholder="Enter your name" required />
+        <input type="text" id="customer-name" placeholder="Enter your name" required>
         <label for="num-tickets">Number of Tickets:</label>
-        <input type="number" id="num-tickets" min="1" max="10" value="1" />
-        <div id="seats-container"></div>
+        <input type="number" id="num-tickets" min="1" max="10" value="1">
+        <div id="seats-container" ></div>
         <button id="back-to-frontpage-tickets">Back To Frontpage</button>
         <button id="confirm-booking">Confirm Booking</button>
-    </section>
+    </div>
 
-    <!-- Confirmation Section -->
-    <section id="confirmation" class="view-content">
+    <div id="confirmation-container" class="container">
         <h1>Booking Confirmation</h1>
         <p id="confirmation-message"></p>
         <button id="return-movie-chooser">Return to Movie Selection</button>
-    </section>
+    </div>
 
     <!-- Admin Section -->
     <section id="admin" class="view-content">
