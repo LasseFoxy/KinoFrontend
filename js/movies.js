@@ -31,7 +31,7 @@ export class Movies {
         movieDiv.classList.add('movie');
 
         const posterImg = document.createElement('img');
-        posterImg.src = `http://localhost:8080${movie.posterUrl}`;
+        posterImg.src = movie.imageUrl;
         posterImg.alt = `${movie.title} Poster`;
         posterImg.width = 200;
         posterImg.height = 300;
