@@ -38,7 +38,7 @@ export class Confirmation {
 }
 
 document.getElementById('return-movie-chooser').addEventListener('click', () => {
-    switchContainer('movies-container');
+    switchContainer('display-movies-seat-selector');
 });
 
 function switchContainer(containerId) {

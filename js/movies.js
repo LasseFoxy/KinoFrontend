@@ -10,29 +10,64 @@ export class Movies {
             seatIds: []
         };
         this.moviesContainer = document.getElementById('movies-container');
+        this.datePicker = document.getElementById('movie-date-picker');
+        this.resetButton = document.getElementById('reset-today-btn');
         this.fetchAndDisplayMovies();
+        this.initDatePicker();
+        this.initResetButton();
     }
 
-    // Fetch and display movies with showtimes
-    fetchAndDisplayMovies() {
+    initDatePicker() {
+        const today = new Date();
+        const maxDate = new Date();
+        maxDate.setMonth(maxDate.getMonth() + 3); // Set max date to 3 months from today
+
+        // Restrict date picker to today and 3 months from now
+        this.datePicker.min = today.toISOString().split('T')[0];
+        this.datePicker.max = maxDate.toISOString().split('T')[0];
+        this.datePicker.value = today.toISOString().split('T')[0]; // Default to today's date
+
+        // Add an event listener to handle date changes
+        this.datePicker.addEventListener('change', (event) => {
+            const selectedDate = event.target.value; // This will be in 'YYYY-MM-DD' format
+            console.log(`Selected date: ${selectedDate}`);
+            this.fetchAndDisplayMovies(selectedDate); // Fetch and display movies for the selected date
+        });
+    }
+
+    initResetButton() {
+        // Add event listener for the reset button to reset to today's date
+        this.resetButton.addEventListener('click', () => {
+            const today = new Date().toISOString().split('T')[0]; // Get today's date
+            this.datePicker.value = today;  // Reset the date picker to today
+            console.log(`Date picker reset to today's date: ${today}`);
+            this.fetchAndDisplayMovies(today);  // Fetch movies for today
+        });
+    }
+
+    // Fetch and display movies based on the selected date
+    fetchAndDisplayMovies(selectedDate = null) {
+        const dateToFetch = selectedDate || this.datePicker.value || new Date().toISOString().split('T')[0];
+
+        console.log(`Fetching movies for date: ${dateToFetch}`);
+
+        // Clear the movie list content to allow reloading
+        this.moviesContainer.innerHTML = '';
+
         fetch('http://localhost:8080/api/movie/movieDTOs')
             .then(response => response.json())
             .then(movies => {
-                this.moviesContainer.innerHTML = '';  // Clear any existing content
-                movies.forEach(movie => this.displayMovie(movie));
+                console.log('Movies fetched:', movies);
+                movies.forEach(movie => this.displayMovie(movie, dateToFetch));
             })
             .catch(error => console.error('Error fetching movies:', error));
     }
 
 
-    // Display individual movie with its showtimes
-    displayMovie(movie) {
+    // Display individual movie and filter its showtimes by the selected date
+    displayMovie(movie, selectedDate) {
         try {
-            console.log(`Processing movie: ${movie.title}`);
-
-            // Get today's date in 'YYYY-MM-DD' format
-            const today = new Date().toISOString().split('T')[0]; // Only get the date part as a string
-            console.log(`Today's date: ${today}`);
+            console.log(`Processing movie: ${movie.title} for date: ${selectedDate}`);
 
             // Check if movie.showings exists and is an array
             if (!Array.isArray(movie.showings)) {
@@ -40,30 +75,19 @@ export class Movies {
                 return; // Skip this movie if showings are not valid
             }
 
-            // Filter the showings that are on today's date (using 'date' field)
-            const todaysShowings = movie.showings.filter(showing => {
-                // Log the full showing object for debugging
-                console.log(`Showing object for movie "${movie.title}":`, showing);
-
-                // Ensure the 'date' field is present and valid
-                if (!showing.date) {
-                    console.error(`Error: Showing date is missing for movie "${movie.title}". Skipping this showing.`);
-                    return false; // Skip this showing if the 'date' field is invalid
-                }
-
-                // Compare the 'date' field with today's date
-                return showing.date.split('T')[0] === today;
+            // Filter the showings that are on the selected date
+            const showingsForDate = movie.showings.filter(showing => {
+                console.log(`Checking showing date "${showing.date}" against selected date "${selectedDate}"`);
+                return showing.date === selectedDate;  // Filter showings based on the selected date
             });
 
-            // Log the number of showings for today
-            console.log(`Number of showings for movie "${movie.title}" today: ${todaysShowings.length}`);
-
-            // If there are no showings today, do not display the movie
-            if (todaysShowings.length === 0) {
-                console.log(`No showings today for movie: ${movie.title}`);
-                return; // Skip this movie if there are no showings today
+            // If there are no showings on the selected date, skip this movie
+            if (showingsForDate.length === 0) {
+                console.log(`No showings for movie "${movie.title}" on ${selectedDate}`);
+                return;
             }
 
+            // Create the movie container
             const movieDiv = document.createElement('div');
             movieDiv.classList.add('movie');
 
@@ -79,29 +103,28 @@ export class Movies {
             movieDiv.appendChild(posterImg);
             movieDiv.appendChild(titleElement);
 
-            // Loop through the filtered showings for today
-            todaysShowings.forEach(showing => {
+            // Loop through the filtered showings for the selected date
+            showingsForDate.forEach(showing => {
                 const showingDiv = document.createElement('div');
                 showingDiv.classList.add('showing');
 
-                // Check if necessary data for the showing exists (e.g., 'theaterName')
+                // Check if necessary data for the showing exists
                 if (!showing.theaterName) {
                     console.error(`Error: Missing data for a showing in movie "${movie.title}".`);
                     return; // Skip this showing if data is incomplete
                 }
 
-                // Extract the time portion from the 'date' field (assuming format like 'YYYY-MM-DDTHH:MM:SS')
-                const showtime = showing.date.split('T')[1]; // This will give you the time portion
-
-                console.log(`Creating button for showing on: ${showing.time} in theater: ${showing.theaterName} at ${showing.startTime}`);
+                // Extract and format the showing time
+                const showtime = showing.startTime;  // Assuming startTime contains only the time (HH:MM:SS)
+                console.log(`Creating button for showing at ${showtime} in theater ${showing.theaterName}`);
 
                 // Create a button element for the showing
                 const showtimeButton = document.createElement('button');
                 showtimeButton.classList.add('showtime-button');
-                showtimeButton.innerText = `Showtime: ${showing.startTime} in ${showing.theaterName}`;
+                showtimeButton.innerText = `Showtime: ${showtime} in ${showing.theaterName}`;
 
                 // Set the necessary data attributes for the button
-                showtimeButton.dataset.startTime = showing.startTime; // Using 'date' here instead of 'startTime'
+                showtimeButton.dataset.startTime = showing.startTime;
                 showtimeButton.dataset.movie = movie.title;
                 showtimeButton.dataset.theaterId = showing.theaterId;
                 showtimeButton.dataset.showingId = showing.showingId;
@@ -109,6 +132,11 @@ export class Movies {
                 // Append the button to the showingDiv
                 showingDiv.appendChild(showtimeButton);
                 movieDiv.appendChild(showingDiv);
+
+                // Add click handler for the button
+                showtimeButton.addEventListener('click', (e) => {
+                    this.handleShowingClick(e);
+                });
             });
 
             // Append the movieDiv to the movies container
@@ -219,3 +247,4 @@ function clearSelectedSeats() {
         seat.classList.remove('selected');
     });
 }
+

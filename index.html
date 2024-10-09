@@ -34,8 +34,18 @@
         <header>
             <h2>Film</h2>
         </header>
+        <div id="display-movies-seat-selector" class="container-visible">
+            <div id="date-picker-container">
+                <label for="movie-date-picker">Select a Date:</label>
+                <input type="date" id="movie-date-picker" />
+            </div>
+            <div id="reset-button-div">
+                <button id="reset-today-btn">Reset to Today</button>
+            </div>
+            <div id="movies-container" class="movies-container">
+            </div>
+        </div>
 
-    <div id="movies-container" class="movies-container"></div>
 
     <!-- Seat Selection Section -->
     <div id="seat-selector-container" class="container">
