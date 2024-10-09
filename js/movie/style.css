@@ -1,0 +1,138 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 30px;
+    margin-top: 50px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 12px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(104, 211, 255, 0.5);
+    border-color: #66afe9;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(104, 211, 255, 0.5);
+}
+
+button:active {
+    background-color: #004085;
+}
+
+.form-group select {
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 12px;
+    font-size: 16px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.alert {
+    display: none;
+}
+
+.input-group {
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+.input-group-text {
+    font-weight: 600;
+}
+
+small {
+    margin-top: 5px;
+    font-style: italic;
+    color: #6c757d;
+}
+
+
+/* Style for both file input and submit button */
+.input-file, .btn-upload {
+    padding: 10px 20px;          /* Same padding for both elements */
+    font-size: 16px;             /* Same font size for consistency */
+    border: 1px solid #6c757d;   /* Grey border for both */
+    border-radius: 5px;          /* Same border radius */
+    background-color: #6c757d;   /* Same grey background color */
+    color: white;                /* White text for both */
+    cursor: pointer;             /* Pointer cursor on hover */
+    display: inline-block;       /* Align both elements in line */
+    width: auto;                 /* Keep the width based on content */
+    margin-top: 10px;            /* Add a small space between the file input and submit button */
+}
+
+.input-file:hover, .btn-upload:hover {
+    background-color: #5a6268;   /* Darker grey when hovering */
+    border-color: #5a6268;       /* Same hover border color */
+}
+
+/* Custom styling for the file input */
+.input-file {
+    display: none; /* Hide the actual file input */
+}
+
+.input-file + label {
+    background-color: #6c757d;  /* Grey background to match the button */
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #6c757d;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.input-file + label:hover {
+    background-color: #5a6268; /* Darker grey on hover */
+    border-color: #5a6268;     /* Same hover border color */
+}
+
+#fileCount {
+    display: block;
+    margin-top: 10px;
+    font-style: italic;
+    color: #6c757d;
+}
+

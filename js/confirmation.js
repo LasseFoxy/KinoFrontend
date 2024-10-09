@@ -26,7 +26,7 @@ export class Confirmation {
             throw new Error('Invalid seat IDs');
         }
         const seatIdsParam = seatIds.join(',');
-        return fetch(`http://localhost:8080/api/seats/byIds?seatIds=${seatIdsParam}`)
+        return fetch(`http://localhost:8080/api/seat/byIds?seatIds=${seatIdsParam}`)
             .then(response => response.json())
             .then(data => data)
             .catch(error => {
@@ -38,7 +38,7 @@ export class Confirmation {
 }
 
 document.getElementById('return-movie-chooser').addEventListener('click', () => {
-    switchContainer('movies-container');
+    switchContainer('display-movies-seat-selector');
 });
 
 function switchContainer(containerId) {
