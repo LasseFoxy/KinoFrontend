@@ -82,26 +82,76 @@ function loadTheaterData(id) {
             document.getElementById("message").classList.add("alert", "alert-danger");
         });
 }
+
+// --- MODAL TIL SLETNING AF BIOGRAFSAL ---
 document.getElementById("deleteTheaterButton").addEventListener("click", function() {
-    const theaterId = prompt("Indtast id på sal der ønskes slettet:");
-    if (theaterId) {
-        deleteTheater(theaterId);
+    openDeleteTheaterModal();
+});
+
+// Eventlistener til at lukke modal på annullering
+document.getElementById("cancelDeleteTheaterButton").addEventListener("click", function() {
+    closeDeleteTheaterModal();
+});
+
+// Eventlistener til at lukke modal på baggrundsklik (luk ved klik på overlay)
+document.getElementById("deleteTheaterModalOverlay").addEventListener("click", function() {
+    closeDeleteTheaterModal();
+});
+
+// Eventlistener til at slette biografsalen når "Bekræft" trykkes
+document.getElementById("confirmDeleteTheaterButton").addEventListener("click", function() {
+    const selectedTheaterId = document.getElementById("theaterSelectDelete").value;
+    if (selectedTheaterId) {
+        deleteTheater(selectedTheaterId);
     }
 });
 
-function deleteTheater(id) {
-    fetch(`http://localhost:8080/api/theater/${id}`, {
-        method: 'DELETE'
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Fejl ved sletning af biografsal');
-            }
-            document.getElementById("message").textContent = "Biografsal slettet succesfuldt!";
-            document.getElementById("message").classList.add("alert", "alert-success");
+// Funktion til at åbne modal og indlæse biografsale i dropdown
+function openDeleteTheaterModal() {
+    fetch("http://localhost:8080/api/theater")
+        .then(response => response.json())
+        .then(theaters => {
+            const theaterSelect = document.getElementById("theaterSelectDelete");
+            theaterSelect.innerHTML = ''; // Rens dropdown før ny indlæsning
+
+            // Tilføj en standard ikke-valgbar option som første valg
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.text = "- Vælg en biografsal -";
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            theaterSelect.appendChild(defaultOption);
+
+            // Tilføj biografsale til dropdown
+            theaters.forEach(theater => {
+                const option = document.createElement("option");
+                option.value = theater.theaterId;
+                option.text = theater.name;
+                theaterSelect.appendChild(option);
+            });
+
+            document.getElementById("deleteTheaterModal").style.display = "block";
+            document.getElementById("deleteTheaterModalOverlay").style.display = "block"; // Vis modal og overlay
         })
-        .catch(error => {
-            document.getElementById("message").textContent = "Der opstod en fejl: " + error.message;
-            document.getElementById("message").classList.add("alert", "alert-danger");
-        });
+        .catch(error => console.error("Fejl ved hentning af biografsale:", error));
 }
+
+// Funktion til at lukke modal og skjule overlay
+function closeDeleteTheaterModal() {
+    document.getElementById("deleteTheaterModal").style.display = "none";
+    document.getElementById("deleteTheaterModalOverlay").style.display = "none";
+}
+
+// Funktion til at slette biografsal
+async function deleteTheater(theaterId) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/theater/${theaterId}`, { method: 'DELETE' });
+        if (!response.ok) throw new Error('Fejl ved sletning af biografsal');
+        alert('Biografsal slettet succesfuldt!');
+        closeDeleteTheaterModal();
+    } catch (error) {
+        console.error('Fejl ved sletning af biografsal:', error);
+        alert('Der opstod en fejl ved sletning af biografsalen.');
+    }
+}
+
