@@ -14,6 +14,19 @@ function handleViewChange() {
 
   // Set the selected view to active
   document.querySelector(defaultView).classList.add("active");
+
+  if (defaultView === "#home") {
+    document.getElementById('display-movies-seat-selector').classList.add('container-visible');
+    document.getElementById('display-movies-seat-selector').classList.remove('container');
+
+    // Ensure seat selector and confirmation containers are hidden
+    document.getElementById('seat-selector-container').classList.add('container');
+    document.getElementById('seat-selector-container').classList.remove('container-visible');
+
+    document.getElementById('confirmation-container').classList.add('container');
+    document.getElementById('confirmation-container').classList.remove('container-visible');
+  }
+
   updateNavbarActiveLink(defaultView); // update active link in navbar
 }
 
