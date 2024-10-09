@@ -8,7 +8,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const addShowingsButton = document.getElementById('addShowingsButton');
     const logContainer = document.getElementById('log-container'); // Container for logs
     const selectedShowings = new Set(); // Store selected showing IDs
-    let currentStartDate = new Date();
+
+    // Function to get the current week's Monday
+    function getMondayOfCurrentWeek() {
+        const today = new Date();
+        const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+        const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust if it's Sunday
+        return new Date(today.setDate(diff)); // Return Monday of the current week
+    }
+
+    // Set currentStartDate to the Monday of the current week
+    let currentStartDate = getMondayOfCurrentWeek();
 
     // Load theaters and movies when DOM is ready
     logMessage("Loading theaters...");
@@ -61,10 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Load movies from backend and populate the dropdown
     function loadMovies() {
         fetch('http://localhost:8080/api/movie')
-            .then(response => response.text()) // Brug .text() i stedet for .json() midlertidigt
+            .then(response => response.text()) // Use .text() temporarily to inspect the response
             .then(data => {
-                console.log('Raw movie data:', data); // Log den rå data for at inspicere den
-                const movies = JSON.parse(data); // Parse den manuelt
+                console.log('Raw movie data:', data); // Log raw data for inspection
+                const movies = JSON.parse(data); // Parse the data manually
                 populateSelectWithPlaceholder(movieSelect, '-', movies, 'movieId', 'title');
                 logMessage("Movies loaded successfully.");
             })
@@ -74,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-    // Load showings for the selected theater and week
     function loadShowingsForWeek() {
         const theaterId = theaterSelect.value;
         if (!theaterId) return; // Exit if no theater is selected
@@ -92,12 +101,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 const dayColumns = {};
 
                 // Initialize columns for each day of the week
-                daysOfWeek.forEach(day => {
+                daysOfWeek.forEach((day, index) => {
                     const column = document.createElement('div');
                     column.classList.add('day-column');
+
+                    // Beregn datoen for denne dag
+                    const dayDate = new Date(currentStartDate);
+                    dayDate.setDate(currentStartDate.getDate() + index);
+
+                    // Formater datoen (f.eks. 7.10 for d. 7. oktober)
+                    const formattedDate = `${dayDate.getDate()}.${dayDate.getMonth() + 1}`;
+
+                    // Opdater headeren til at vise både dag og dato
                     const header = document.createElement('h3');
-                    header.textContent = day.charAt(0).toUpperCase() + day.slice(1); // Capitalize the first letter
+                    header.textContent = `${day.charAt(0).toUpperCase() + day.slice(1)}, d. ${formattedDate}`;
                     column.appendChild(header);
+
                     dayColumns[day] = column;
                     showingsContainer.appendChild(column);
                 });
@@ -105,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 showings.forEach(showing => {
                     const showingElement = document.createElement('div');
                     showingElement.classList.add('showing');
-                    showingElement.textContent = `${showing.date} - ${showing.startTime}`;
+                    showingElement.textContent = `${showing.startTime.substring(0, 5)}`;
 
                     // Mark as booked or available based on movie status
                     if (showing.movieTitle) {
@@ -135,6 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
+
+
     // Change the week by adjusting the currentStartDate
     function changeWeek(days) {
         currentStartDate.setDate(currentStartDate.getDate() + days);
@@ -145,12 +166,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function toggleSelection(element, showingId) {
         if (selectedShowings.has(showingId)) {
             selectedShowings.delete(showingId);
-            element.classList.remove('selected');
+            element.textContent = '';  // Clear the content, but keep the element in DOM
+            element.classList.remove('selected'); // Remove the 'selected' class
         } else {
             selectedShowings.add(showingId);
             element.classList.add('selected');
         }
     }
+
 
     // Add movie to the selected showings when the button is clicked
     addShowingsButton.addEventListener('click', () => {
@@ -195,4 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
             logContainer.appendChild(logElement);
         }
     }
+
+    // Load showings for the current week when the page loads
+    loadShowingsForWeek();
 });
