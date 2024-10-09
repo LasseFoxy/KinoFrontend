@@ -14,7 +14,7 @@ export class Confirmation {
             const seatNumbers = seats.map(seat => `${seat.seatRow}${seat.seatNumber}`).join(', ');
 
             document.getElementById('confirmation-message').innerText =
-                `You have successfully booked ${numTickets} tickets to see "${movieTitle}" at ${time}. Your seats are: ${seatNumbers}.`;
+                `Du har booket ${numTickets} billetter til at se "${movieTitle}" klokken ${time}. Din(e) sæder er: ${seatNumbers}.`;
 
             switchContainer('confirmation-container');
         });
