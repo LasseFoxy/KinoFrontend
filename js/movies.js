@@ -27,50 +27,126 @@ export class Movies {
 
     // Display individual movie with its showtimes
     displayMovie(movie) {
-        const movieDiv = document.createElement('div');
-        movieDiv.classList.add('movie');
+        try {
+            console.log(`Processing movie: ${movie.title}`);
 
-        const posterImg = document.createElement('img');
-        posterImg.src = movie.imageUrl;
-        posterImg.alt = `${movie.title} Poster`;
-        posterImg.width = 200;
-        posterImg.height = 300;
+            // Get today's date in 'YYYY-MM-DD' format
+            const today = new Date().toISOString().split('T')[0]; // Only get the date part as a string
+            console.log(`Today's date: ${today}`);
 
-        const titleElement = document.createElement('h3');
-        titleElement.innerText = movie.title;
+            // Check if movie.showings exists and is an array
+            if (!Array.isArray(movie.showings)) {
+                console.error(`Error: Showings data for movie "${movie.title}" is not an array or is missing.`);
+                return; // Skip this movie if showings are not valid
+            }
 
-        movieDiv.appendChild(posterImg);
-        movieDiv.appendChild(titleElement);
+            // Filter the showings that are on today's date (using 'date' field)
+            const todaysShowings = movie.showings.filter(showing => {
+                // Log the full showing object for debugging
+                console.log(`Showing object for movie "${movie.title}":`, showing);
 
-        movie.showings.forEach(showing => {
-            const showingDiv = document.createElement('div');
-            showingDiv.classList.add('showing');
+                // Ensure the 'date' field is present and valid
+                if (!showing.date) {
+                    console.error(`Error: Showing date is missing for movie "${movie.title}". Skipping this showing.`);
+                    return false; // Skip this showing if the 'date' field is invalid
+                }
 
-            // Use the formatShowtime function to format the showtime
-            const formattedShowing = formatShowing(showing.startTime, showing.theaterName);
+                // Compare the 'date' field with today's date
+                return showing.date.split('T')[0] === today;
+            });
 
-            showingDiv.innerText = formattedShowing;
-            showingDiv.dataset.startTime = showing.startTime;
-            showingDiv.dataset.movie = movie.title;
-            showingDiv.dataset.theaterId = showing.theaterId;
-            showingDiv.dataset.showingId = showing.showingId;
+            // Log the number of showings for today
+            console.log(`Number of showings for movie "${movie.title}" today: ${todaysShowings.length}`);
 
-            movieDiv.appendChild(showingDiv);
-        });
+            // If there are no showings today, do not display the movie
+            if (todaysShowings.length === 0) {
+                console.log(`No showings today for movie: ${movie.title}`);
+                return; // Skip this movie if there are no showings today
+            }
 
-        this.moviesContainer.appendChild(movieDiv);
+            const movieDiv = document.createElement('div');
+            movieDiv.classList.add('movie');
+
+            const posterImg = document.createElement('img');
+            posterImg.src = movie.imageUrl;
+            posterImg.alt = `${movie.title} Poster`;
+            posterImg.width = 200;
+            posterImg.height = 300;
+
+            const titleElement = document.createElement('h3');
+            titleElement.innerText = movie.title;
+
+            movieDiv.appendChild(posterImg);
+            movieDiv.appendChild(titleElement);
+
+            // Loop through the filtered showings for today
+            todaysShowings.forEach(showing => {
+                const showingDiv = document.createElement('div');
+                showingDiv.classList.add('showing');
+
+                // Check if necessary data for the showing exists (e.g., 'theaterName')
+                if (!showing.theaterName) {
+                    console.error(`Error: Missing data for a showing in movie "${movie.title}".`);
+                    return; // Skip this showing if data is incomplete
+                }
+
+                // Extract the time portion from the 'date' field (assuming format like 'YYYY-MM-DDTHH:MM:SS')
+                const showtime = showing.date.split('T')[1]; // This will give you the time portion
+
+                console.log(`Creating button for showing on: ${showing.time} in theater: ${showing.theaterName} at ${showing.startTime}`);
+
+                // Create a button element for the showing
+                const showtimeButton = document.createElement('button');
+                showtimeButton.classList.add('showtime-button');
+                showtimeButton.innerText = `Showtime: ${showing.startTime} in ${showing.theaterName}`;
+
+                // Set the necessary data attributes for the button
+                showtimeButton.dataset.startTime = showing.startTime; // Using 'date' here instead of 'startTime'
+                showtimeButton.dataset.movie = movie.title;
+                showtimeButton.dataset.theaterId = showing.theaterId;
+                showtimeButton.dataset.showingId = showing.showingId;
+
+                // Append the button to the showingDiv
+                showingDiv.appendChild(showtimeButton);
+                movieDiv.appendChild(showingDiv);
+            });
+
+            // Append the movieDiv to the movies container
+            this.moviesContainer.appendChild(movieDiv);
+            console.log(`Movie "${movie.title}" with showings added to the container.`);
+
+        } catch (error) {
+            console.error(`Error processing movie "${movie.title}":`, error);
+        }
     }
+
+
+
 
     // Function to handle clicking on a showtime
     handleShowingClick(e) {
-        if (e.target.classList.contains('showing')) {
-            const selectedTime = e.target.dataset.time;
-            const selectedMovie = e.target.dataset.movie;
-            const theaterId = e.target.dataset.theaterId;
-            const showingId = e.target.dataset.showingId;
+        try {
+            // Check if the clicked element is a button inside a showing div
+            if (e.target.classList.contains('showtime-button')) {
+                // Retrieve the data from the clicked button
+                const selectedTime = e.target.dataset.startTime;
+                const selectedMovie = e.target.dataset.movie;
+                const theaterId = e.target.dataset.theaterId;
+                const showingId = e.target.dataset.showingId;
 
-            // Call redirectToSeatSelection with the selected details
-            this.redirectToSeatSelection(selectedMovie, selectedTime, theaterId, showingId);
+                // Log the details of the selected showing
+                console.log(`Selected Movie: ${selectedMovie}`);
+                console.log(`Selected Showtime: ${selectedTime}`);
+                console.log(`Theater ID: ${theaterId}`);
+                console.log(`Showing ID: ${showingId}`);
+
+                // Redirect to the seat selection view by updating the URL hash
+                this.redirectToSeatSelection(selectedMovie, selectedTime, theaterId, showingId);
+            } else {
+                console.log('Clicked element is not a showtime button.');
+            }
+        } catch (error) {
+            console.error('Error handling showtime click event:', error);
         }
     }
 
