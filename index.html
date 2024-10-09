@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/styles/adminPage.css" />
     <link rel="stylesheet" href="/styles/seatselector.css" />
     <link rel="stylesheet" href="/styles/scheduleShowings.css" />
+    <link rel="stylesheet" href="/styles/modal.css" />
     <title>Kickback Kino</title>
 </head>
 
@@ -104,6 +105,22 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal overlay (baggrund) -->
+    <div id="deleteTheaterModalOverlay" class="modal-overlay" style="display: none;"></div>
+
+    <!-- Modal til sletning af biografsal -->
+    <div id="deleteTheaterModal" class="modal">
+        <h2>Slet Biografsal</h2>
+        <label for="theaterSelectDelete">Vælg en biografsal:</label>
+        <select id="theaterSelectDelete"></select>
+        <div class="modal-buttons">
+            <button id="confirmDeleteTheaterButton" class="btn btn-success">Bekræft</button>
+            <button id="cancelDeleteTheaterButton" class="btn btn-secondary">Annuller</button>
+        </div>
+    </div>
+
+
 
     <!-- Add Movie Section -->
     <section id="add-movie" class="view-content" style="display: none;">
