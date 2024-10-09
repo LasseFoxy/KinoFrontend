@@ -10,11 +10,10 @@ export class Confirmation {
         const { movieTitle, time, seatIds } = this.bookingDetails;
         this.fetchSeatDetails(seatIds).then(seats => {
             const numTickets = seats.length;
-            const seatNumbers = seats.map(seat => `${seat.seatRow}${seat.seatNumber}`).join(', ');
-
+            const seatNumbers = seats.map(seat => `${seat.seatRow}${this.getSeatLetter(seat.seatNumber)}`).join(', ');
+            const formattedTime = time.slice(0, 5).replace(":", " ");
             document.getElementById('confirmation-message').innerText =
-                `Du har booket ${numTickets} billetter til at se "${movieTitle}" klokken ${time}. Din(e) sæder er: ${seatNumbers}.`;
-
+                `Du har booket ${numTickets} billetter til at se "${movieTitle}" klokken ${formattedTime}. Din(e) sæder er: ${seatNumbers}.`;
             switchContainer('confirmation-container');
         });
     }
@@ -31,11 +30,33 @@ export class Confirmation {
                 return [];
             });
     }
+
+    getSeatLetter(seatNumber) {
+        const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+        return alphabet[(seatNumber - 1) % 26];
+    }
+
+    // Fetch seat details based on seat IDs
+    fetchSeatDetails(seatIds) {
+        if (!Array.isArray(seatIds) || seatIds.length === 0) {
+            throw new Error('Invalid seat IDs');
+        }
+        const seatIdsParam = seatIds.join(',');
+        return fetch(`http://localhost:8080/api/seat/byIds?seatIds=${seatIdsParam}`)
+            .then(response => response.json())
+            .then(data => data)
+            .catch(error => {
+                console.error('Error fetching seat details:', error);
+                return [];
+            });
+    }
 }
 
 document.getElementById('return-movie-chooser').addEventListener('click', () => {
     switchContainer('display-movies-seat-selector');
 });
+
+
 
 function switchContainer(containerId) {
     const currentVisible = document.querySelector('.container-visible');
