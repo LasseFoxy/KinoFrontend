@@ -85,6 +85,12 @@ export class Tickets {
 
         seatsContainer.innerHTML = '';  // Clear previous content
 
+        // Helper function to convert a number into a letter (1 -> 'a', 2 -> 'b', etc.)
+        function getSeatLetter(seatNumber) {
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            return alphabet[(seatNumber - 1) % 26];  // Modulus for wrap-around if needed
+        }
+
         const groupedSeats = seats.reduce((acc, seat) => {
             if (!acc[seat.seatRow]) {
                 acc[seat.seatRow] = [];
@@ -99,7 +105,10 @@ export class Tickets {
             groupedSeats[row].forEach(seat => {
                 const seatDiv = document.createElement('div');
                 seatDiv.classList.add('seat');
-                seatDiv.innerText = `${seat.seatRow}${seat.seatNumber}`;
+
+                // Generate seat name in '1a', '1b', '2a' format
+                const seatLetter = getSeatLetter(seat.seatNumber);
+                seatDiv.innerText = `${seat.seatRow}${seatLetter}`;
                 seatDiv.dataset.seatId = seat.seatId;
                 seatDiv.dataset.seatRow = seat.seatRow;
                 seatDiv.dataset.seatNumber = seat.seatNumber;
