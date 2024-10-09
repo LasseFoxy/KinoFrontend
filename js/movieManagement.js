@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const movieHours = document.getElementById('addMovieHours').value;
         const movieMinutes = document.getElementById('addMovieMinutes').value;
         const moviePGRating = document.getElementById('addMoviePGRating').value;
-        const imageUrl = document.getElementById('addMovieImageUrl').value; // URL til billedet
+        const imageUrl = document.getElementById('addMovieImageUrl').value;
 
         // Konverter timer og minutter til samlet varighed i minutter
         const movieDuration = parseInt(movieHours) * 60 + parseInt(movieMinutes);
@@ -82,14 +82,12 @@ document.addEventListener('DOMContentLoaded', function () {
             title: movieTitle,
             description: movieDescription,
             genre: movieGenre,
-            duration: movieDuration, // Varighed i minutter
+            duration: movieDuration,
             ageLimit: moviePGRating,
-            imageUrl: imageUrl // Billedets URL
+            imageUrl: imageUrl
         };
 
         // POST-anmodning til at tilføje film
-        console.log("Starting the POST request to add a movie...");
-
         fetch('http://localhost:8080/api/movie', {
             method: 'POST',
             headers: {
@@ -157,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
             genre: movieGenre,
             duration: movieDuration,
             ageLimit: moviePGRating,
-            imageUrl: imageUrl // Billedets URL
+            imageUrl: imageUrl
         };
 
         // PUT-anmodning til at opdatere film
@@ -177,20 +175,80 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
-    // Håndter sletning af film
-    document.getElementById('deleteMovieBtn').addEventListener('click', function () {
-        const movieId = document.getElementById('movieId').value;
 
-        fetch(`http://localhost:8080/api/movie/${movieId}`, {
-            method: 'DELETE'
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Movie deleted successfully');
-                // Tilføj eventuelt logik til at fjerne filmen fra UI eller navigere tilbage til filmoversigten
-            })
-            .catch(error => {
-                console.error('Error deleting movie:', error);
-            });
+
+
+
+    // Håndter sletning af film
+    // Eventlistener til at åbne modal for sletning af film
+    document.getElementById("deleteMovieButton").addEventListener("click", function() {
+        openDeleteMovieModal();
     });
+
+// Eventlistener til at lukke modal ved annullering
+    document.getElementById("cancelDeleteMovieButton").addEventListener("click", function() {
+        closeDeleteMovieModal();
+    });
+
+// Eventlistener til at lukke modal ved klik på overlay
+    document.getElementById("deleteMovieModalOverlay").addEventListener("click", function() {
+        closeDeleteMovieModal();
+    });
+
+// Eventlistener til at slette film, når "Bekræft" trykkes
+    document.getElementById("confirmDeleteMovieButton").addEventListener("click", function() {
+        const selectedMovieId = document.getElementById("movieSelectDelete").value;
+        if (selectedMovieId) {
+            deleteMovie(selectedMovieId);
+        }
+    });
+
+// Funktion til at åbne modal og indlæse film i dropdown
+    function openDeleteMovieModal() {
+        fetch("http://localhost:8080/api/movie")  // Fetch til film-API'en
+            .then(response => response.json())
+            .then(movies => {
+                const movieSelect = document.getElementById("movieSelectDelete");
+                movieSelect.innerHTML = '';  // Rens dropdown før ny indlæsning
+
+                // Tilføj en standard ikke-valgbar option som første valg
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.text = "- Vælg en film -";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                movieSelect.appendChild(defaultOption);
+
+                // Tilføj film til dropdown
+                movies.forEach(movie => {
+                    const option = document.createElement("option");
+                    option.value = movie.movieID;  // Bruger movieID for at referere til film
+                    option.text = movie.title;     // Bruger filmens titel som tekst
+                    movieSelect.appendChild(option);
+                });
+
+                document.getElementById("deleteMovieModal").style.display = "block";
+                document.getElementById("deleteMovieModalOverlay").style.display = "block"; // Vis modal og overlay
+            })
+            .catch(error => console.error("Fejl ved hentning af film:", error));
+    }
+
+// Funktion til at lukke modal og skjule overlay
+    function closeDeleteMovieModal() {
+        document.getElementById("deleteMovieModal").style.display = "none";
+        document.getElementById("deleteMovieModalOverlay").style.display = "none";
+    }
+
+// Funktion til at slette film
+    async function deleteMovie(movieId) {
+        try {
+            const response = await fetch(`http://localhost:8080/api/movie/${movieId}`, { method: 'DELETE' });  // Brug movieId i endpoint
+            if (!response.ok) throw new Error('Fejl ved sletning af film');
+            alert('Filmen blev slettet succesfuldt!');
+            closeDeleteMovieModal();
+        } catch (error) {
+            console.error('Fejl ved sletning af film:', error);
+            alert('Der opstod en fejl ved sletning af filmen.');
+        }
+    }
 });
