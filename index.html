@@ -166,13 +166,13 @@
         <form id="addMovieForm">
             <!-- Movie Title -->
             <div class="form-group">
-                <label for="addMovieTitle">Filmtitel: </label>
+                <label for="addMovieTitle">Film titel: </label>
                 <input type="text" class="form-control" id="addMovieTitle" placeholder="Movie Title" required>
             </div>
 
             <!-- Description -->
             <div class="form-group">
-                <label for="addMovieDescription">Filmbeskrivelse:</label>
+                <label for="addMovieDescription">Film beskrivelse:</label>
                 <input type="text" class="form-control" id="addMovieDescription" placeholder="Description" required>
             </div>
 
@@ -204,18 +204,18 @@
 
             <!-- Movie Duration -->
             <div class="form-group">
-                <label for="addMovieHours" class="form-label">Filmlængde:</label>
+                <label for="addMovieHours" class="form-label">Film længde:</label>
                 <div class="input-group">
-                    <input type="number" class="form-control" id="addMovieHours" placeholder="Hours" min="0" max="24" style="width: 60px;" required>
+                    <input type="number" class="form-control" id="addMovieHours" placeholder="Timer" min="0" max="24" style="width: 60px;" required>
                     <span class="input-group-text">:</span>
-                    <input type="number" class="form-control" id="addMovieMinutes" placeholder="Minutes" min="0" max="59" style="width: 60px;" required>
+                    <input type="number" class="form-control" id="addMovieMinutes" placeholder="Minutter" min="0" max="59" style="width: 60px;" required>
                 </div>
                 <small class="form-text text-muted">Indtast timer og minutter (TT:MM).</small>
             </div>
 
             <!-- PGRating -->
             <div class="form-group">
-                <label for="addMoviePGRating">Aldersbegrænsning: </label>
+                <label for="addMoviePGRating">Alders begrænsning: </label>
                 <select class="form-control" id="addMoviePGRating" required>
                     <option value="" disabled selected>Vælg en aldersbegrænsning</option>
                     <option value="0">Tilladt for alle (G)</option>
@@ -233,7 +233,7 @@
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary mt-3">Indsend Film</button>
+            <button type="submit" class="btn btn-primary mt-3">Tilføj Film</button>
 
         </form>
     </section>
@@ -241,19 +241,29 @@
     <!-- Edit Movie Section -->
     <section id="edit-movie" class="view-content" style="display: none;">
         <h2>Rediger Film</h2>
+
+        <!-- Movie Selection Dropdown -->
+        <div class="form-group">
+            <label for="movieSelectEdit">Vælg en film at redigere:</label>
+            <select id="movieSelectEdit" class="form-control">
+                <option value="" disabled selected>Vælg en film</option>
+            </select>
+        </div>
+
+
         <form id="editMovieForm">
             <!-- Hidden input to store the movie ID -->
             <input type="hidden" id="movieId">
 
             <!-- Movie Title -->
             <div class="form-group">
-                <label for="editMovieTitle">Filmtitel:</label>
+                <label for="editMovieTitle">Film titel:</label>
                 <input type="text" class="form-control" id="editMovieTitle" placeholder="Movie Title">
             </div>
 
             <!-- Movie Description -->
             <div class="form-group">
-                <label for="editMovieDescription">Filmbeskrivelse:</label>
+                <label for="editMovieDescription">Film beskrivelse:</label>
                 <input type="text" class="form-control" id="editMovieDescription" placeholder="Description">
             </div>
 
@@ -285,18 +295,18 @@
 
             <!-- Movie Duration -->
             <div class="form-group">
-                <label for="editMovieHours" class="form-label">Filmlængde:</label>
+                <label for="editMovieHours" class="form-label">Film længde:</label>
                 <div class="input-group">
-                    <input type="number" class="form-control" id="editMovieHours" placeholder="Hours" min="0" max="24" style="width: 60px;" required>
+                    <input type="number" class="form-control" id="editMovieHours" placeholder="Timer" min="0" max="24" style="width: 60px;" required>
                     <span class="input-group-text">:</span>
-                    <input type="number" class="form-control" id="editMovieMinutes" placeholder="Minutes" min="0" max="59" style="width: 60px;" required>
+                    <input type="number" class="form-control" id="editMovieMinutes" placeholder="Minutter" min="0" max="59" style="width: 60px;" required>
                 </div>
                 <small class="form-text text-muted">Indtast timer og minutter (TT:MM).</small>
             </div>
 
             <!-- PGRating -->
             <div class="form-group">
-                <label for="editMoviePGRating">Aldersbegrænsning: </label>
+                <label for="editMoviePGRating">Alders begrænsning: </label>
                 <select class="form-control" id="editMoviePGRating" required>
                     <option value="" disabled selected>Vælg en aldersbegrænsning</option>
                     <option value="0">Tilladt for alle (G)</option>
@@ -315,7 +325,7 @@
 
 
             <!-- Other fields follow... -->
-            <button type="submit" class="btn btn-primary mt-3">Update Movie</button>
+            <button type="submit" class="btn btn-primary mt-3">Opdater Film</button>
 
         </form>
     </section>
