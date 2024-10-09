@@ -94,8 +94,9 @@ export class Movies {
             const posterImg = document.createElement('img');
             posterImg.src = movie.imageUrl;
             posterImg.alt = `${movie.title} Poster`;
-            posterImg.width = 200;
-            posterImg.height = 300;
+            posterImg.onerror = function() {
+                posterImg.src = 'styles/images/fb4fc0dd-d8a2-4c0a-b4f7-32812b784e75.webp';  // Optional fallback image
+            };
 
             const titleElement = document.createElement('h3');
             titleElement.innerText = movie.title;

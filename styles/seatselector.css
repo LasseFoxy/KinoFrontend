@@ -4,19 +4,23 @@
 }
 
 .movies-container{
+    padding-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around; /* Adds spacing between items */
 }
 
+
 .movie {
-    width: 22%; /* Adjust width to fit 4 movies in a row */
-    margin-bottom: 20px; /* Add some space between rows */
+    width: 22%;
+    margin-bottom: 20px;
 }
 
+
+
 .movie img {
-    width: 100%;
-    height: auto; /* Maintain aspect ratio */
+    width: 90%;
+    height: 50%; /* Maintain aspect ratio */
 }
 
 .showing {
