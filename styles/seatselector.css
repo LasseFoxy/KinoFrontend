@@ -1,4 +1,9 @@
-.movies-container {
+.display-movies-seat-selector{
+    display: flex;
+    justify-content: center;
+}
+
+.movies-container{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around; /* Adds spacing between items */

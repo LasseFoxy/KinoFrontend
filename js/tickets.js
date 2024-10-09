@@ -247,7 +247,7 @@ document.getElementById('confirm-booking').addEventListener('click', () => {
 document.getElementById('back-to-frontpage-tickets').addEventListener('click', () => {
     clearSelectedSeats()
     window.tickets.fetchAndDisplaySeats();
-    switchContainer('movies-container');
+    switchContainer('display-movies-seat-selector');
 })
 
 
