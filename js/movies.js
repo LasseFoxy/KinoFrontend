@@ -94,8 +94,9 @@ export class Movies {
             const posterImg = document.createElement('img');
             posterImg.src = movie.imageUrl;
             posterImg.alt = `${movie.title} Poster`;
-            posterImg.width = 200;
-            posterImg.height = 300;
+            posterImg.onerror = function() {
+                posterImg.src = 'styles/images/fb4fc0dd-d8a2-4c0a-b4f7-32812b784e75.webp';  // Optional fallback image
+            };
 
             const titleElement = document.createElement('h3');
             titleElement.innerText = movie.title;
@@ -179,6 +180,7 @@ export class Movies {
     }
 
     // This function transitions to the seat selection page
+    // This function transitions to the seat selection page
     redirectToSeatSelection(movieTitle, time, theaterId, showingId) {
         clearSelectedSeats();
         // Set booking details based on movie selection
@@ -187,13 +189,12 @@ export class Movies {
         // Switch to the seat selection container
         switchContainer('seat-selector-container');
 
-        // Only create an instance of Tickets if it doesn't already exist
-        if (!window.tickets) {
-            window.tickets = new Tickets(this.bookingDetails);
-            console.log('Tickets instance created:', window.tickets);
-            window.tickets.fetchAndDisplaySeats();  // Fetch and display seats for the selected showtime
-        }
+        // Always create a new instance of Tickets for each new showing
+        window.tickets = new Tickets(this.bookingDetails);  // Reinitialize the Tickets class with new booking details
+        console.log('Tickets instance created:', window.tickets);
+        window.tickets.fetchAndDisplaySeats();  // Fetch and display seats for the selected showtime
     }
+
 
     // Set booking details when transitioning from the movie selection page
     setBookingDetails(movieTitle, time, theaterId, showingId) {
