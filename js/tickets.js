@@ -9,22 +9,65 @@ export class Tickets {
 
     // Fetch and display available and booked seats for a specific theatre and showtime
     fetchAndDisplaySeats() {
-        const { theatreId, showtimeId } = this.bookingDetails;
-        fetch(`http://localhost:8080/api/seats/theatre/${theatreId}`)
-            .then(response => response.json())
-            .then(seats => {
-                fetch(`http://localhost:8080/api/orders/showtimes/${showtimeId}`)
-                    .then(response => response.json())
-                    .then(orders => this.processSeatData(seats, orders))
+        const { theaterId, showingId } = this.bookingDetails;
+
+        fetch(`http://localhost:8080/api/seat/theater/${theaterId}`)
+            .then(response => {
+                if (!response.ok) {  // Check if the response is not OK (status code 2xx)
+                    throw new Error(`Error fetching seats: ${response.status} ${response.statusText}`);
+                }
+                return response.text();  // Get the raw response as text
+            })
+            .then(text => {
+                console.log('Raw seats response:', text);  // Log the raw text response
+
+                let seats;
+                try {
+                    seats = JSON.parse(text);  // Attempt to parse the JSON
+                } catch (e) {
+                    console.error('Invalid JSON from seats API:', text);  // Log the invalid JSON
+                    throw new Error('Invalid JSON response');
+                }
+
+                fetch(`http://localhost:8080/api/order/showing/${showingId}`)
+                    .then(response => {
+                        if (!response.ok) {  // Check if the response is not OK
+                            throw new Error(`Error fetching orders: ${response.status} ${response.statusText}`);
+                        }
+                        return response.text();  // Get the raw response as text
+                    })
+                    .then(text => {
+                        console.log('Raw orders response:', text);  // Log the raw text response
+
+                        let orders;
+                        try {
+                            orders = JSON.parse(text);  // Attempt to parse the JSON
+                        } catch (e) {
+                            console.error('Invalid JSON from orders API:', text);  // Log the invalid JSON
+                            throw new Error('Invalid JSON response');
+                        }
+
+                        this.processSeatData(seats, orders);
+                    })
                     .catch(error => console.error('Error fetching orders:', error));
             })
-            .catch(error => console.error('Error fetching seats:', error));
+            .catch(error => {
+                console.error('Error fetching seats:', error);  // Log the error
+                alert('Failed to load seat data. Please try again later.');  // Notify the user
+            });
+
     }
+
 
 
 
     // Process and display seat data
     processSeatData(seats, orders) {
+        console.log("Seats data:", seats);
+        if (!Array.isArray(seats)) {
+            console.error('Seats is not an array:', seats);
+            return;
+        }
         const bookedSeatIds = new Set();
         orders.forEach(order => {
             if (order.tickets && Array.isArray(order.tickets)) {
@@ -139,14 +182,14 @@ export class Tickets {
 
         const orderPayload = {
             customerName: customerName,
-            showtimeId: this.bookingDetails.showtimeId,
+            showingId: this.bookingDetails.showingId,
             seatIds: seatIds
         };
 
         console.log('Payload being sent:', JSON.stringify(orderPayload));
 
         // Send booking request
-        fetch('http://localhost:8080/api/orders', {
+        fetch('http://localhost:8080/api/order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(orderPayload)
@@ -211,7 +254,6 @@ document.getElementById('back-to-frontpage-tickets').addEventListener('click', (
 
 function switchContainer(containerId) {
     const currentVisible = document.querySelector('.container-visible');
-
     // Hide the current visible container
     if (currentVisible) {
         currentVisible.classList.remove('container-visible');
