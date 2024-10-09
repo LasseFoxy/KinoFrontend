@@ -24,7 +24,7 @@ function createMovieCard(movie) {
 
     // Movie image
     const poster = document.createElement('img');
-    poster.src = movie.posterUrl;
+    poster.src = movie.imageUrl;
     poster.alt = `${movie.title} poster`;
     poster.classList.add('movie-poster');
     card.appendChild(poster);

@@ -1,4 +1,4 @@
-.movies-container {
+.movies-container2 {
     display: grid; /* Brug grid layout */
     grid-template-columns: repeat(4, 1fr); /* Fire film på hver række */
     gap: 20px; /* Afstand mellem filmkasser */
