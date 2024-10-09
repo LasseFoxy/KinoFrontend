@@ -6,7 +6,6 @@ export class Confirmation {
         this.showBookingConfirmation();
     }
 
-    // Show the booking confirmation
     showBookingConfirmation() {
         const { movieTitle, time, seatIds } = this.bookingDetails;
         this.fetchSeatDetails(seatIds).then(seats => {
@@ -20,7 +19,6 @@ export class Confirmation {
         });
     }
 
-    // Fetch seat details based on seat IDs
     fetchSeatDetails(seatIds) {
         if (!Array.isArray(seatIds) || seatIds.length === 0) {
             throw new Error('Invalid seat IDs');
@@ -30,11 +28,9 @@ export class Confirmation {
             .then(response => response.json())
             .then(data => data)
             .catch(error => {
-                console.error('Error fetching seat details:', error);
                 return [];
             });
     }
-
 }
 
 document.getElementById('return-movie-chooser').addEventListener('click', () => {
@@ -43,14 +39,10 @@ document.getElementById('return-movie-chooser').addEventListener('click', () => 
 
 function switchContainer(containerId) {
     const currentVisible = document.querySelector('.container-visible');
-
-    // Hide the current visible container
     if (currentVisible) {
         currentVisible.classList.remove('container-visible');
         currentVisible.classList.add('container');
     }
-
-    // Show the new container
     const newContainer = document.getElementById(containerId);
     newContainer.classList.remove('container');
     newContainer.classList.add('container-visible');
