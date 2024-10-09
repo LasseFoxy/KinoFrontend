@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(movieData) // Send movie data som JSON
+            body: JSON.stringify(movieData)
         })
             .then(response => {
                 if (!response.ok) {
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         // Tilføj filmene til dropdown
                         movies.forEach(movie => {
                             const option = document.createElement('option');
-                            option.value = movie.movieID;
+                            option.value = movie.movieId;
                             option.text = movie.title;
                             movieSelect.appendChild(option);
                         });
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         .then(response => response.json())
                         .then(movie => {
                             // Fyld formularen med filmens oplysninger
-                            document.getElementById('movieId').value = movie.movieID;
+                            document.getElementById('movieId').value = movie.movieId;
                             document.getElementById('editMovieTitle').value = movie.title;
                             document.getElementById('editMovieDescription').value = movie.description;
                             document.getElementById('editMovieGenre').value = movie.genre;
@@ -173,8 +173,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         .catch(error => console.error('Fejl ved hentning af filmdetaljer:', error));
                 }
             });
-
-
 
             // Håndter opdatering af film
             document.getElementById('editMovieForm').addEventListener('submit', function (event) {
@@ -220,51 +218,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-
-
-
-        document.getElementById('editMovieForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Forhindrer form submission
-
-            const movieId = document.getElementById('movieId').value;
-            const movieTitle = document.getElementById('editMovieTitle').value;
-            const movieDescription = document.getElementById('editMovieDescription').value;
-            const movieGenre = document.getElementById('editMovieGenre').value;
-            const movieHours = document.getElementById('editMovieHours').value;
-            const movieMinutes = document.getElementById('editMovieMinutes').value;
-            const moviePGRating = document.getElementById('editMoviePGRating').value;
-            const imageUrl = document.getElementById('editMovieImageUrl').value; // URL til billedet
-
-            // Konverter timer og minutter til samlet varighed i minutter
-            const movieDuration = parseInt(movieHours) * 60 + parseInt(movieMinutes);
-
-            // Opret et movieData objekt
-            const movieData = {
-                title: movieTitle,
-                description: movieDescription,
-                genre: movieGenre,
-                duration: movieDuration,
-                ageLimit: moviePGRating,
-                imageUrl: imageUrl
-            };
-
-            // PUT-anmodning til at opdatere film
-            fetch(`http://localhost:8080/api/movie/${movieId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(movieData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Filmen blev opdateret succesfuldt');
-                })
-                .catch(error => {
-                    console.error('Fejl ved opdatering af film:', error);
-                });
-        });
-
         //------------------------------------- DELETE --------------------------------------------------
 
         // Håndter sletning af film
@@ -293,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Funktion til at åbne modal og indlæse film i dropdown
         function openDeleteMovieModal() {
-            fetch("http://localhost:8080/api/movie")  // Fetch til film-API'en
+            fetch(`http://localhost:8080/api/movie`)  // Fetch til film-API'en
                 .then(response => response.json())
                 .then(movies => {
                     const movieSelect = document.getElementById("movieSelectDelete");
@@ -310,8 +263,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Tilføj film til dropdown
                     movies.forEach(movie => {
                         const option = document.createElement("option");
-                        option.value = movie.movieID;  // Bruger movieID for at referere til film
-                        option.text = movie.title;     // Bruger filmens titel som tekst
+                        option.value = movie.movieId;
+                        option.text = movie.title;
                         movieSelect.appendChild(option);
                     });
 
