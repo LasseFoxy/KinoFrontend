@@ -142,19 +142,20 @@
     <section id="add-movie" class="view-content" style="display: none;">
         <h2>Add Movie</h2>
         <div id="addMovieResponseAlert" class="alert alert-success" role="alert" style="display: none;">
-            Movie added successfully!
+            Film tilføjet succesfuldt!
+
         </div>
 
         <form id="addMovieForm">
             <!-- Movie Title -->
             <div class="form-group">
-                <label for="addMovieTitle">Movie Title: </label>
+                <label for="addMovieTitle">Filmtitel: </label>
                 <input type="text" class="form-control" id="addMovieTitle" placeholder="Movie Title" required>
             </div>
 
             <!-- Description -->
             <div class="form-group">
-                <label for="addMovieDescription">Movie Description:</label>
+                <label for="addMovieDescription">Filmbeskrivelse:</label>
                 <input type="text" class="form-control" id="addMovieDescription" placeholder="Description" required>
             </div>
 
@@ -162,80 +163,80 @@
             <div class="form-group">
                 <label for="addMovieGenre">Genre:</label>
                 <select id="addMovieGenre" class="form-control" required>
-                    <option value="" disabled selected>Select a genre</option>
+                    <option value="" disabled selected>Vælg en genre</option>
                     <option value="action">Action</option>
-                    <option value="adventure">Adventure</option>
+                    <option value="adventure">Eventyr</option>
                     <option value="animation">Animation</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="crime">Crime</option>
-                    <option value="documentary">Documentary</option>
+                    <option value="comedy">Komedie</option>
+                    <option value="crime">Krimi</option>
+                    <option value="documentary">Dokumentar</option>
                     <option value="drama">Drama</option>
-                    <option value="family">Family</option>
+                    <option value="family">Familie</option>
                     <option value="fantasy">Fantasy</option>
-                    <option value="history">History</option>
-                    <option value="horror">Horror</option>
-                    <option value="music">Music</option>
-                    <option value="mystery">Mystery</option>
-                    <option value="romance">Romance</option>
+                    <option value="history">Historie</option>
+                    <option value="horror">Gyser</option>
+                    <option value="music">Musik</option>
+                    <option value="mystery">Mysterie</option>
+                    <option value="romance">Romantik</option>
                     <option value="science_fiction">Science Fiction</option>
                     <option value="thriller">Thriller</option>
-                    <option value="war">War</option>
+                    <option value="war">Krig</option>
                     <option value="western">Western</option>
                 </select>
             </div>
 
             <!-- Movie Duration -->
             <div class="form-group">
-                <label for="addMovieHours" class="form-label">Movie Duration:</label>
+                <label for="addMovieHours" class="form-label">Filmlængde:</label>
                 <div class="input-group">
                     <input type="number" class="form-control" id="addMovieHours" placeholder="Hours" min="0" max="24" style="width: 60px;" required>
                     <span class="input-group-text">:</span>
                     <input type="number" class="form-control" id="addMovieMinutes" placeholder="Minutes" min="0" max="59" style="width: 60px;" required>
                 </div>
-                <small class="form-text text-muted">Enter hours and minutes (HH:MM).</small>
+                <small class="form-text text-muted">Indtast timer og minutter (TT:MM).</small>
             </div>
 
             <!-- PGRating -->
             <div class="form-group">
-                <label for="addMoviePGRating">Age Restriction: </label>
+                <label for="addMoviePGRating">Aldersbegrænsning: </label>
                 <select class="form-control" id="addMoviePGRating" required>
-                    <option value="" disabled selected>Choose an age restriction</option>
-                    <option value="0">General Audience (G)</option>
-                    <option value="6">Suitable for 6 years and older (PG)</option>
-                    <option value="12">Suitable for 12 years and older (PG-12)</option>
-                    <option value="15">Suitable for 15 years and older (PG-15)</option>
-                    <option value="18">Suitable for 18 years and older (R)</option>
+                    <option value="" disabled selected>Vælg en aldersbegrænsning</option>
+                    <option value="0">Tilladt for alle (G)</option>
+                    <option value="6">Egnet for 6 år og ældre (PG)</option>
+                    <option value="12">Egnet for 12 år og ældre (PG-12)</option>
+                    <option value="15">Egnet for 15 år og ældre (PG-15)</option>
+                    <option value="18">Egnet for 18 år og ældre (R)</option>
                 </select>
             </div>
 
             <!-- Movie Image URL -->
             <div class="form-group">
-                <label for="addMovieImageUrl">Movie Image URL:</label>
+                <label for="addMovieImageUrl">Film Billede URL:</label>
                 <input type="text" class="form-control" id="addMovieImageUrl" placeholder="Enter image URL" required>
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary mt-3">Submit Movie</button>
+            <button type="submit" class="btn btn-primary mt-3">Indsend Film</button>
 
         </form>
     </section>
 
     <!-- Edit Movie Section -->
     <section id="edit-movie" class="view-content" style="display: none;">
-        <h2>Edit Movie</h2>
+        <h2>Rediger Film</h2>
         <form id="editMovieForm">
             <!-- Hidden input to store the movie ID -->
             <input type="hidden" id="movieId">
 
             <!-- Movie Title -->
             <div class="form-group">
-                <label for="editMovieTitle">Movie Title:</label>
+                <label for="editMovieTitle">Filmtitel:</label>
                 <input type="text" class="form-control" id="editMovieTitle" placeholder="Movie Title">
             </div>
 
             <!-- Movie Description -->
             <div class="form-group">
-                <label for="editMovieDescription">Movie Description:</label>
+                <label for="editMovieDescription">Filmbeskrivelse:</label>
                 <input type="text" class="form-control" id="editMovieDescription" placeholder="Description">
             </div>
 
@@ -243,55 +244,55 @@
             <div class="form-group">
                 <label for="editMovieGenre">Genre:</label>
                 <select id="editMovieGenre" class="form-control">
-                    <option value="" disabled selected>Select a genre</option>
+                    <option value="" disabled selected>Vælg en genre</option>
                     <option value="action">Action</option>
-                    <option value="adventure">Adventure</option>
+                    <option value="adventure">Eventyr</option>
                     <option value="animation">Animation</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="crime">Crime</option>
-                    <option value="documentary">Documentary</option>
+                    <option value="comedy">Komedie</option>
+                    <option value="crime">Krimi</option>
+                    <option value="documentary">Dokumentar</option>
                     <option value="drama">Drama</option>
-                    <option value="family">Family</option>
+                    <option value="family">Familie</option>
                     <option value="fantasy">Fantasy</option>
-                    <option value="history">History</option>
-                    <option value="horror">Horror</option>
-                    <option value="music">Music</option>
-                    <option value="mystery">Mystery</option>
-                    <option value="romance">Romance</option>
+                    <option value="history">Historie</option>
+                    <option value="horror">Gyser</option>
+                    <option value="music">Musik</option>
+                    <option value="mystery">Mysterie</option>
+                    <option value="romance">Romantik</option>
                     <option value="science_fiction">Science Fiction</option>
                     <option value="thriller">Thriller</option>
-                    <option value="war">War</option>
+                    <option value="war">Krig</option>
                     <option value="western">Western</option>
                 </select>
             </div>
 
             <!-- Movie Duration -->
             <div class="form-group">
-                <label for="editMovieHours" class="form-label">Movie Duration:</label>
+                <label for="editMovieHours" class="form-label">Filmlængde:</label>
                 <div class="input-group">
                     <input type="number" class="form-control" id="editMovieHours" placeholder="Hours" min="0" max="24" style="width: 60px;" required>
                     <span class="input-group-text">:</span>
                     <input type="number" class="form-control" id="editMovieMinutes" placeholder="Minutes" min="0" max="59" style="width: 60px;" required>
                 </div>
-                <small class="form-text text-muted">Enter hours and minutes (HH:MM).</small>
+                <small class="form-text text-muted">Indtast timer og minutter (TT:MM).</small>
             </div>
 
             <!-- PGRating -->
             <div class="form-group">
-                <label for="editMoviePGRating">Age Restriction: </label>
+                <label for="editMoviePGRating">Aldersbegrænsning: </label>
                 <select class="form-control" id="editMoviePGRating" required>
-                    <option value="" disabled selected>Choose an age restriction</option>
-                    <option value="0">General Audience (G)</option>
-                    <option value="6">Suitable for 6 years and older (PG)</option>
-                    <option value="12">Suitable for 12 years and older (PG-12)</option>
-                    <option value="15">Suitable for 15 years and older (PG-15)</option>
-                    <option value="18">Suitable for 18 years and older (R)</option>
+                    <option value="" disabled selected>Vælg en aldersbegrænsning</option>
+                    <option value="0">Tilladt for alle (G)</option>
+                    <option value="6">Egnet for 6 år og ældre (PG)</option>
+                    <option value="12">Egnet for 12 år og ældre (PG-12)</option>
+                    <option value="15">Egnet for 15 år og ældre (PG-15)</option>
+                    <option value="18">Egnet for 18 år og ældre (R)</option>
                 </select>
             </div>
 
             <!-- Movie Image URL -->
             <div class="form-group">
-                <label for="editMovieImageUrl">Movie Image URL:</label>
+                <label for="editMovieImageUrl">Film Billede URL:</label>
                 <input type="text" class="form-control" id="editMovieImageUrl" placeholder="Enter image URL" required>
             </div>
 
