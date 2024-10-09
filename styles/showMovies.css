@@ -1,0 +1,33 @@
+.movies-container {
+    display: grid; /* Brug grid layout */
+    grid-template-columns: repeat(4, 1fr); /* Fire film på hver række */
+    gap: 20px; /* Afstand mellem filmkasser */
+    justify-items: center; /* Centrer filmene horisontalt */
+    padding: 20px;
+}
+
+.movie-card {
+    width: 200px; /* Fast bredde på filmkassen */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 10px;
+}
+
+.movie-poster {
+    width: 100%; /* Billedet udfylder hele bredden af movie-card */
+    height: auto; /* Automatisk højde baseret på bredde */
+    max-height: 300px; /* Maksimal højde for billedet */
+    object-fit: cover; /* Bevar proportioner af billedet */
+    border-radius: 10px;
+}
+
+.movie-card h3 {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.movie-card p {
+    font-size: 14px;
+}
