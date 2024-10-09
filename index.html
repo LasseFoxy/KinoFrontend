@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/styles/seatselector.css" />
     <link rel="stylesheet" href="/styles/scheduleShowings.css" />
     <link rel="stylesheet" href="/styles/modal.css" />
+    <link rel="stylesheet" href="/styles/showMovies.css" />
     <title>Kickback Kino</title>
 </head>
 
@@ -37,11 +38,11 @@
         </header>
         <div id="display-movies-seat-selector" class="container-visible">
             <div id="date-picker-container">
-                <label for="movie-date-picker">Select a Date:</label>
+                <label for="movie-date-picker">Vælg en Dato</label>
                 <input type="date" id="movie-date-picker" />
             </div>
             <div id="reset-button-div">
-                <button id="reset-today-btn">Reset to Today</button>
+                <button id="reset-today-btn">Tilbage Til Idag</button>
             </div>
             <div id="movies-container" class="movies-container">
             </div>
@@ -54,34 +55,50 @@
                 <h2>Seat Selection</h2>
             </header>
             <h2 id="movie-subtitle"></h2>
-            <label for="customer-name">Customer Name:</label>
-            <input type="text" id="customer-name" placeholder="Enter your name" required />
-            <label for="num-tickets">Number of Tickets:</label>
+            <label for="customer-name">Kunde Navn</label>
+            <input type="text" id="customer-name" placeholder="Indtast dit navn" required />
+            <label for="num-tickets">Antal Billetter:</label>
             <input type="number" id="num-tickets" min="1" max="10" value="1" />
             <div id="screen" style="width: 40%; height:20px; background-color: red; color: white; text-align: center; padding: 10px; margin: 20px auto;">
                 Lærred
             </div>
             <div id="seats-container"></div>
-            <button id="back-to-frontpage-tickets">Back To Frontpage</button>
-            <button id="confirm-booking">Confirm Booking</button>
+            <button id="back-to-frontpage-tickets">Tilbage til Forside</button>
+            <button id="confirm-booking">Bekræft Reservation</button>
         </div>
 
 
         <!-- Confirmation Section -->
     <div id="confirmation-container" class="container">
         <header>
-            <h2>Booking Confirmation</h2>
+            <h2>Booking Bekræftelse</h2>
         </header>
         <p id="confirmation-message"></p>
-        <button id="return-movie-chooser">Return to Movie Selection</button>
+        <button id="return-movie-chooser">Tilbage til Filmoversigt</button>
     </div>
     </section>
 
 
     <!-- Movies Section -->
     <section id="movies" class="view-content">
-            <h2>Film der vises</h2>
+        <h2>Film der vises</h2>
+        <div id="filter-container">
+            <div class="filter">
+                <label for="genre-filter">Filter Genre:</label>
+                <select id="genre-filter">
+                    <option value="">Alle Genrer</option>
+                </select>
+            </div>
+            <div class="filter">
+                <label for="age-limit-filter">Filtrer Aldersgrænse:</label>
+                <select id="age-limit-filter">
+                    <option value="">Alle Aldersgrænser</option>
+                </select>
+            </div>
+        </div>
+        <div id="movies-container2" class="movies-container2"></div>
     </section>
+
 
 
     <!-- Admin Section -->
@@ -370,6 +387,37 @@
             <h2>Login</h2>
         </header>
         <p>Login formular.</p>
+        <div class="container-visible">
+            <h2>Registrering</h2>
+            <form id="form">
+                <div class="form-control" id="username-container">
+                    <label for="username">Brugernavn</label>
+                    <input type="text" id="username" placeholder="Indtast dit brugernavn">
+                    <small>Brugernavn er ikke udfyldt</small>
+                </div>
+                <div class="form-control" id="email-container">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Indtast din email">
+                    <small>Email er ikke udfyldt</small>
+                </div>
+                <div class="form-control" id="phone-number-container">
+                    <label for="phone-number">Telefonnummer</label>
+                    <input type="number" id="phone-number" placeholder="Indtast dit telefonnummer">
+                    <small>Telefonnummer er ikke udfyldt</small>
+                </div>
+                <div class="form-control" id="password-container">
+                    <label for="password">Kodeord</label>
+                    <input type="password" id="password" placeholder="Indtast dit kodeord">
+                    <small>Kodeord er ikke udfyldt</small>
+                </div>
+                <div class="form-control" id="password2-container">
+                    <label for="password2">Bekræft Kodeord</label>
+                    <input type="password" id="password2" placeholder="Bekræft dit kodeord">
+                    <small>Kodeord matcher ikke</small>
+                </div>
+                <button type="submit">Udfør</button>
+            </form>
+        </div>
     </section>
 </main>
 
@@ -378,9 +426,11 @@
 <script src="/js/tickets.js" type="module"></script>
 <script src="/js/confirmation.js" type="module"></script>
 <script src="/js/index.js" type="module"></script>
-<script src="/js/theater.js" type="module"></script>
+<script src="/js/theater.js"></script>
+<script src="/js/Create.js"></script> 
 <script src="/js/scheduleShowings.js" type="module"></script>
 <script src="/js/movieManagement.js" type="module"></script>
+<script src="/js/showMovies.js" type="module"></script>
 
 </body>
 </html>
