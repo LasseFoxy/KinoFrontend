@@ -136,6 +136,13 @@
                     <button class="admin-btn">Slet Admin</button>
                 </div>
             </div>
+            <div class="admin-section">
+                <h3>Ordrer</h3>
+                <div class="admin-btn-container">
+                    <button class="admin-btn" id="show-orders-button">Se Ordrer For Næste 7 Dage</button>
+                    <button class="admin-btn" id="show-extended-orders-button">Se Alle Ordrer</button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -389,6 +396,20 @@
         </div>
     </section>
 
+    <!-- ORDER SECTION -->
+
+    <div id="order-list-overlay-modal" class="modal-overlay" style="display: none;"></div>
+    <div id="order-list-modal" class="modal">
+        <!-- Close button at the top -->
+        <h2>Listning Af Ordrer</h2>  <!-- Modal title will be dynamically updated -->
+        <div id="search-container">
+            <input type="text" id="search-name" placeholder="Indtast Kundenavn">
+        </div>
+        <button class="close-orders-list-button modal-buttons">Luk Vindue</button>
+        <div id="order-list-div">
+            <p></p>  <!-- Modal content will be dynamically updated -->
+        </div>
+
     <!-- Login Section -->
     <section id="login" class="view-content">
         <header>
@@ -438,6 +459,7 @@
 <script src="/js/Create.js"></script> 
 <script src="/js/scheduleShowings.js" type="module"></script>
 <script src="/js/movieManagement.js" type="module"></script>
+<script src="/js/orderList.js" type="module"></script>
 <script src="/js/showMovies.js" type="module"></script>
 
 </body>
