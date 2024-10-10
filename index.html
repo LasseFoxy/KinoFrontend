@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/styles/seatselector.css" />
     <link rel="stylesheet" href="/styles/scheduleShowings.css" />
     <link rel="stylesheet" href="/styles/modal.css" />
+    <link rel="stylesheet" href="/styles/showMovies.css" />
     <title>Kickback Kino</title>
 </head>
 
@@ -54,8 +55,8 @@
                 <h2>Seat Selection</h2>
             </header>
             <h2 id="movie-subtitle"></h2>
-            <label for="customer-name">Navn og Efternavn</label>
-            <input type="text" id="customer-name" placeholder="Indtast dit navn og efternavn" required />
+            <label for="customer-name">Kunde Navn</label>
+            <input type="text" id="customer-name" placeholder="Indtast dit navn" required />
             <label for="num-tickets">Antal Billetter:</label>
             <input type="number" id="num-tickets" min="1" max="10" value="1" />
             <div id="screen" style="width: 40%; height:20px; background-color: red; color: white; text-align: center; padding: 10px; margin: 20px auto;">
@@ -80,8 +81,24 @@
 
     <!-- Movies Section -->
     <section id="movies" class="view-content">
-            <h2>Film der vises</h2>
+        <h2>Film der vises</h2>
+        <div id="filter-container">
+            <div class="filter">
+                <label for="genre-filter">Filter Genre:</label>
+                <select id="genre-filter">
+                    <option value="">Alle Genrer</option>
+                </select>
+            </div>
+            <div class="filter">
+                <label for="age-limit-filter">Filtrer Aldersgrænse:</label>
+                <select id="age-limit-filter">
+                    <option value="">Alle Aldersgrænser</option>
+                </select>
+            </div>
+        </div>
+        <div id="movies-container2" class="movies-container2"></div>
     </section>
+
 
 
     <!-- Admin Section -->
@@ -89,7 +106,7 @@
         <header>
             <h2>Admin</h2>
         </header>
-        <div class="admin-panel" >
+        <div class="admin-panel">
             <!-- Theater Management -->
             <div class="admin-section">
                 <h3>Sale</h3>
@@ -119,13 +136,6 @@
                     <button class="admin-btn">Slet Admin</button>
                 </div>
             </div>
-            <div class="admin-section">
-                <h3>Ordrer</h3>
-                <div class="admin-btn-container">
-                    <button class="admin-btn" id="show-orders-button">Se Ordrer For Næste 7 Dage</button>
-                    <button class="admin-btn" id="show-extended-orders-button">Se Alle Ordrer</button>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -147,164 +157,175 @@
 
     <!-- Add Movie Section -->
     <section id="add-movie" class="view-content" style="display: none;">
-        <h2>Add Movie</h2>
+        <h2>TilFøj film</h2>
         <div id="addMovieResponseAlert" class="alert alert-success" role="alert" style="display: none;">
-            Movie added successfully!
+            Film tilføjet succesfuldt!
+
         </div>
 
         <form id="addMovieForm">
             <!-- Movie Title -->
             <div class="form-group">
-                <label for="addMovieTitle">Movie Title: </label>
-                <input type="text" class="form-control" id="addMovieTitle" placeholder="Movie Title" required>
+                <label for="addMovieTitle">Film titel: </label>
+                <input type="text" class="form-control" id="addMovieTitle" placeholder="Film titel" required>
             </div>
 
             <!-- Description -->
             <div class="form-group">
-                <label for="addMovieDescription">Movie Description:</label>
-                <input type="text" class="form-control" id="addMovieDescription" placeholder="Description" required>
+                <label for="addMovieDescription">Film beskrivelse:</label>
+                <input type="text" class="form-control" id="addMovieDescription" placeholder="Film beskrivelse" required>
             </div>
 
             <!-- Movie Genre -->
             <div class="form-group">
                 <label for="addMovieGenre">Genre:</label>
                 <select id="addMovieGenre" class="form-control" required>
-                    <option value="" disabled selected>Select a genre</option>
+                    <option value="" disabled selected>Vælg en genre</option>
                     <option value="action">Action</option>
-                    <option value="adventure">Adventure</option>
+                    <option value="adventure">Eventyr</option>
                     <option value="animation">Animation</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="crime">Crime</option>
-                    <option value="documentary">Documentary</option>
+                    <option value="comedy">Komedie</option>
+                    <option value="crime">Krimi</option>
+                    <option value="documentary">Dokumentar</option>
                     <option value="drama">Drama</option>
-                    <option value="family">Family</option>
+                    <option value="family">Familie</option>
                     <option value="fantasy">Fantasy</option>
-                    <option value="history">History</option>
-                    <option value="horror">Horror</option>
-                    <option value="music">Music</option>
-                    <option value="mystery">Mystery</option>
-                    <option value="romance">Romance</option>
+                    <option value="history">Historie</option>
+                    <option value="horror">Gyser</option>
+                    <option value="music">Musik</option>
+                    <option value="mystery">Mysterie</option>
+                    <option value="romance">Romantik</option>
                     <option value="science_fiction">Science Fiction</option>
                     <option value="thriller">Thriller</option>
-                    <option value="war">War</option>
+                    <option value="war">Krig</option>
                     <option value="western">Western</option>
                 </select>
             </div>
 
             <!-- Movie Duration -->
             <div class="form-group">
-                <label for="addMovieHours" class="form-label">Movie Duration:</label>
+                <label for="addMovieHours" class="form-label">Film længde:</label>
                 <div class="input-group">
-                    <input type="number" class="form-control" id="addMovieHours" placeholder="Hours" min="0" max="24" style="width: 60px;" required>
+                    <input type="number" class="form-control" id="addMovieHours" placeholder="Timer" min="0" max="24" style="width: 60px;" required>
                     <span class="input-group-text">:</span>
-                    <input type="number" class="form-control" id="addMovieMinutes" placeholder="Minutes" min="0" max="59" style="width: 60px;" required>
+                    <input type="number" class="form-control" id="addMovieMinutes" placeholder="Minutter" min="0" max="59" style="width: 60px;" required>
                 </div>
-                <small class="form-text text-muted">Enter hours and minutes (HH:MM).</small>
+                <small class="form-text text-muted">Indtast timer og minutter (TT:MM).</small>
             </div>
 
             <!-- PGRating -->
             <div class="form-group">
-                <label for="addMoviePGRating">Age Restriction: </label>
+                <label for="addMoviePGRating">Alders begrænsning: </label>
                 <select class="form-control" id="addMoviePGRating" required>
-                    <option value="" disabled selected>Choose an age restriction</option>
-                    <option value="0">General Audience (G)</option>
-                    <option value="6">Suitable for 6 years and older (PG)</option>
-                    <option value="12">Suitable for 12 years and older (PG-12)</option>
-                    <option value="15">Suitable for 15 years and older (PG-15)</option>
-                    <option value="18">Suitable for 18 years and older (R)</option>
+                    <option value="" disabled selected>Vælg en aldersbegrænsning</option>
+                    <option value="0">Tilladt for alle (G)</option>
+                    <option value="6">Egnet for 6 år og ældre (PG)</option>
+                    <option value="12">Egnet for 12 år og ældre (PG-12)</option>
+                    <option value="15">Egnet for 15 år og ældre (PG-15)</option>
+                    <option value="18">Egnet for 18 år og ældre (R)</option>
                 </select>
             </div>
 
             <!-- Movie Image URL -->
             <div class="form-group">
-                <label for="addMovieImageUrl">Movie Image URL:</label>
-                <input type="text" class="form-control" id="addMovieImageUrl" placeholder="Enter image URL" required>
+                <label for="addMovieImageUrl">Film Billede URL:</label>
+                <input type="text" class="form-control" id="addMovieImageUrl" placeholder="Film Billede URL" required>
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary mt-3">Submit Movie</button>
+            <button type="submit" class="btn btn-primary mt-3">Tilføj Film</button>
 
         </form>
     </section>
 
     <!-- Edit Movie Section -->
     <section id="edit-movie" class="view-content" style="display: none;">
-        <h2>Edit Movie</h2>
+        <h2>Rediger Film</h2>
+
+        <!-- Movie Selection Dropdown -->
+        <div class="form-group">
+            <label for="movieSelectEdit">Vælg en film at redigere:</label>
+            <select id="movieSelectEdit" class="form-control">
+                <option value="" disabled selected>Vælg en film</option>
+            </select>
+        </div>
+
+
         <form id="editMovieForm">
             <!-- Hidden input to store the movie ID -->
             <input type="hidden" id="movieId">
 
             <!-- Movie Title -->
             <div class="form-group">
-                <label for="editMovieTitle">Movie Title:</label>
-                <input type="text" class="form-control" id="editMovieTitle" placeholder="Movie Title">
+                <label for="editMovieTitle">Film titel:</label>
+                <input type="text" class="form-control" id="editMovieTitle" placeholder="Film titel">
             </div>
 
             <!-- Movie Description -->
             <div class="form-group">
-                <label for="editMovieDescription">Movie Description:</label>
-                <input type="text" class="form-control" id="editMovieDescription" placeholder="Description">
+                <label for="editMovieDescription">Film beskrivelse:</label>
+                <input type="text" class="form-control" id="editMovieDescription" placeholder="Film beskrivelse">
             </div>
 
             <!-- Movie Genre -->
             <div class="form-group">
                 <label for="editMovieGenre">Genre:</label>
                 <select id="editMovieGenre" class="form-control">
-                    <option value="" disabled selected>Select a genre</option>
+                    <option value="" disabled selected>Vælg en genre</option>
                     <option value="action">Action</option>
-                    <option value="adventure">Adventure</option>
+                    <option value="adventure">Eventyr</option>
                     <option value="animation">Animation</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="crime">Crime</option>
-                    <option value="documentary">Documentary</option>
+                    <option value="comedy">Komedie</option>
+                    <option value="crime">Krimi</option>
+                    <option value="documentary">Dokumentar</option>
                     <option value="drama">Drama</option>
-                    <option value="family">Family</option>
+                    <option value="family">Familie</option>
                     <option value="fantasy">Fantasy</option>
-                    <option value="history">History</option>
-                    <option value="horror">Horror</option>
-                    <option value="music">Music</option>
-                    <option value="mystery">Mystery</option>
-                    <option value="romance">Romance</option>
+                    <option value="history">Historie</option>
+                    <option value="horror">Gyser</option>
+                    <option value="music">Musik</option>
+                    <option value="mystery">Mysterie</option>
+                    <option value="romance">Romantik</option>
                     <option value="science_fiction">Science Fiction</option>
                     <option value="thriller">Thriller</option>
-                    <option value="war">War</option>
+                    <option value="war">Krig</option>
                     <option value="western">Western</option>
                 </select>
             </div>
 
             <!-- Movie Duration -->
             <div class="form-group">
-                <label for="editMovieHours" class="form-label">Movie Duration:</label>
+                <label for="editMovieHours" class="form-label">Film længde:</label>
                 <div class="input-group">
-                    <input type="number" class="form-control" id="editMovieHours" placeholder="Hours" min="0" max="24" style="width: 60px;" required>
+                    <input type="number" class="form-control" id="editMovieHours" placeholder="Timer" min="0" max="24" style="width: 60px;" required>
                     <span class="input-group-text">:</span>
-                    <input type="number" class="form-control" id="editMovieMinutes" placeholder="Minutes" min="0" max="59" style="width: 60px;" required>
+                    <input type="number" class="form-control" id="editMovieMinutes" placeholder="Minutter" min="0" max="59" style="width: 60px;" required>
                 </div>
-                <small class="form-text text-muted">Enter hours and minutes (HH:MM).</small>
+                <small class="form-text text-muted">Indtast timer og minutter (TT:MM).</small>
             </div>
 
             <!-- PGRating -->
             <div class="form-group">
-                <label for="editMoviePGRating">Age Restriction: </label>
+                <label for="editMoviePGRating">Alders begrænsning: </label>
                 <select class="form-control" id="editMoviePGRating" required>
-                    <option value="" disabled selected>Choose an age restriction</option>
-                    <option value="0">General Audience (G)</option>
-                    <option value="6">Suitable for 6 years and older (PG)</option>
-                    <option value="12">Suitable for 12 years and older (PG-12)</option>
-                    <option value="15">Suitable for 15 years and older (PG-15)</option>
-                    <option value="18">Suitable for 18 years and older (R)</option>
+                    <option value="" disabled selected>Vælg en aldersbegrænsning</option>
+                    <option value="0">Tilladt for alle (G)</option>
+                    <option value="6">Egnet for 6 år og ældre (PG)</option>
+                    <option value="12">Egnet for 12 år og ældre (PG-12)</option>
+                    <option value="15">Egnet for 15 år og ældre (PG-15)</option>
+                    <option value="18">Egnet for 18 år og ældre (R)</option>
                 </select>
             </div>
 
             <!-- Movie Image URL -->
             <div class="form-group">
-                <label for="editMovieImageUrl">Movie Image URL:</label>
-                <input type="text" class="form-control" id="editMovieImageUrl" placeholder="Enter image URL" required>
+                <label for="editMovieImageUrl">Film Billede URL:</label>
+                <input type="text" class="form-control" id="editMovieImageUrl" placeholder="Film Billede URL" required>
             </div>
 
 
             <!-- Other fields follow... -->
-            <button type="submit" class="btn btn-primary mt-3">Update Movie</button>
+            <button type="submit" class="btn btn-primary mt-3">Opdater Film</button>
 
         </form>
     </section>
@@ -370,24 +391,6 @@
         </div>
     </section>
 
-    <!-- Orders section -->
-
-    <div id="order-list-overlay-modal" class="modal-overlay" style="display: none;"></div>
-    <div id="order-list-modal" class="modal">
-        <!-- Close button at the top -->
-        <h2>Listning Af Ordrer</h2>  <!-- Modal title will be dynamically updated -->
-        <div id="search-container">
-            <input type="text" id="search-name" placeholder="Indtast Kundenavn">
-        </div>
-        <button class="close-orders-list-button modal-buttons">Luk Vindue</button>
-        <div id="order-list-div">
-            <p></p>  <!-- Modal content will be dynamically updated -->
-        </div>
-
-        <!-- Close button at the bottom -->
-        <button class="close-orders-list-button modal-buttons">Luk Vindue</button>
-    </div>
-
     <!-- Login Section -->
     <section id="login" class="view-content">
         <header>
@@ -395,34 +398,34 @@
         </header>
         <p>Login formular.</p>
         <div class="container-visible">
-            <h2>Register</h2>
+            <h2>Registrering</h2>
             <form id="form">
                 <div class="form-control" id="username-container">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="Enter your username">
-                    <small>Error message</small>
+                    <label for="username">Brugernavn</label>
+                    <input type="text" id="username" placeholder="Indtast dit brugernavn">
+                    <small>Brugernavn er ikke udfyldt</small>
                 </div>
                 <div class="form-control" id="email-container">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter your email">
-                    <small>Error message</small>
+                    <input type="email" id="email" placeholder="Indtast din email">
+                    <small>Email er ikke udfyldt</small>
                 </div>
                 <div class="form-control" id="phone-number-container">
-                    <label for="phone-number">Phonenumber</label>
-                    <input type="number" id="phone-number" placeholder="Enter your phone number">
-                    <small>Error message</small>
+                    <label for="phone-number">Telefonnummer</label>
+                    <input type="number" id="phone-number" placeholder="Indtast dit telefonnummer">
+                    <small>Telefonnummer er ikke udfyldt</small>
                 </div>
                 <div class="form-control" id="password-container">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password">
-                    <small>Error message</small>
+                    <label for="password">Kodeord</label>
+                    <input type="password" id="password" placeholder="Indtast dit kodeord">
+                    <small>Kodeord er ikke udfyldt</small>
                 </div>
                 <div class="form-control" id="password2-container">
-                    <label for="password2">Confirm Password</label>
-                    <input type="password" id="password2" placeholder="Confirm your password">
-                    <small>Error message</small>
+                    <label for="password2">Bekræft Kodeord</label>
+                    <input type="password" id="password2" placeholder="Bekræft dit kodeord">
+                    <small>Kodeord matcher ikke</small>
                 </div>
-                <button type="submit">Submit</button>
+                <button type="submit">Udfør</button>
             </form>
         </div>
     </section>
@@ -437,9 +440,7 @@
 <script src="/js/Create.js"></script> 
 <script src="/js/scheduleShowings.js" type="module"></script>
 <script src="/js/movieManagement.js" type="module"></script>
-<script src="/js/orderList.js" type="module"></script>
-<script src="/js/extendedOrderList.js.js" type="module"></script>
-
+<script src="/js/showMovies.js" type="module"></script>
 
 </body>
 </html>
