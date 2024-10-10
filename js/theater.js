@@ -18,7 +18,7 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
 
     // Skelne mellem oprettelse og opdatering
     const method = theaterId ? 'PUT' : 'POST';
-    const url = theaterId ? `https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/theater/${theaterId}` : 'https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/theater';
+    const url = theaterId ? `https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/theater/${theaterId}` : 'https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/theater';
 
     // Send request til backend API
     fetch(url, {
@@ -57,7 +57,7 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
 // Funktion til at indlæse data for en biografsal, når den skal opdateres
 function loadTheaterData(id) {
     // Hent data for en biografsal ved ID
-    fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/theater/${id}`)
+    fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/theater/${id}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Fejl ved hentning af biografsal');
@@ -108,7 +108,7 @@ document.getElementById("confirmDeleteTheaterButton").addEventListener("click", 
 
 // Funktion til at åbne modal og indlæse biografsale i dropdown
 function openDeleteTheaterModal() {
-    fetch("https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/theater")
+    fetch("https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/theater")
         .then(response => response.json())
         .then(theaters => {
             const theaterSelect = document.getElementById("theaterSelectDelete");
@@ -145,7 +145,7 @@ function closeDeleteTheaterModal() {
 // Funktion til at slette biografsal
 async function deleteTheater(theaterId) {
     try {
-        const response = await fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/theater/${theaterId}`, { method: 'DELETE' });
+        const response = await fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/theater/${theaterId}`, { method: 'DELETE' });
         if (!response.ok) throw new Error('Fejl ved sletning af biografsal');
         alert('Biografsal slettet succesfuldt!');
         closeDeleteTheaterModal();

@@ -10,7 +10,7 @@ export class Tickets {
     fetchAndDisplaySeats() {
         const { theaterId, showingId } = this.bookingDetails;
 
-        fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/seat/theater/${theaterId}`)
+        fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/seat/theater/${theaterId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Error fetching seats: ${response.status} ${response.statusText}`);
@@ -25,7 +25,7 @@ export class Tickets {
                     throw new Error('Invalid JSON response');
                 }
 
-                fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/order/showing/${showingId}`)
+                fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/order/showing/${showingId}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`Error fetching orders: ${response.status} ${response.statusText}`);
@@ -165,7 +165,7 @@ export class Tickets {
             seatIds: seatIds
         };
 
-        fetch('https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/order', {
+        fetch('https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(orderPayload)
