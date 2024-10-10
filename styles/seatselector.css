@@ -22,9 +22,9 @@
 
 
 .movie img {
-    width: 90%;
+    width: 300px;
     margin-top: 15px;
-    height: 50%; /* Maintain aspect ratio */
+    height: auto
 }
 
 .showing {
@@ -41,13 +41,6 @@
 /* Visible container */
 .visible {
     display: block; /* Show the visible container */
-}
-
-/* Button styles */
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    cursor: pointer;
 }
 
 /* General styles for the seat layout */
@@ -132,6 +125,7 @@ button {
     background: linear-gradient(135deg, #ad8bea 0%, #6a36bf 100%);
     color: white;
     font-size: 18px;
+    padding: 8px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -147,4 +141,8 @@ button:hover {
 button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+#date-picker-container{
+    padding:10px;
 }

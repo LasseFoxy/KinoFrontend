@@ -1,5 +1,7 @@
 .view-content {
     box-shadow: none;
+    background-color: transparent;
+    height: 100%;
 }
 
 #showings-container {
@@ -15,7 +17,7 @@
 }
 
 .day-column {
-    background-color: #2f3b57;
+    background-color: #62606a;
     padding: 15px;
     border-radius: 10px;
     text-align: center;
