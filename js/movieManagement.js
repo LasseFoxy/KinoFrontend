@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function () {
+
+
     // Funktion til at tilføje Bootstrap CSS dynamisk
     function addBootstrap() {
         if (!document.getElementById('bootstrap-css')) {
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         addBootstrap(); // Tilføj Bootstrap når Add Movie vises
     });
 
+    // Håndter navigation til Edit Movie sektionen
     // Håndter navigation til Edit Movie sektionen
     document.getElementById('showEditMovieForm').addEventListener('click', function () {
         window.location.hash = "#edit-movie"; // Opdater URL'en med hash
@@ -105,154 +107,146 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json(); // Forsøg at parse JSON-svaret
             })
             .then(data => {
-                // Vis succesbesked til brugeren
-                document.getElementById('addMovieResponseAlert').style.display = 'block';
-                document.getElementById('addMovieResponseAlert').innerText = 'Film oprettet!';
-
-                // Nulstil formularen efter film er oprettet
-                document.getElementById('addMovieForm').reset();
+                alert('Film oprettet succesfuldt!');  // Simpel JavaScript alert
+                document.getElementById('addMovieForm').reset();  // Nulstil formularen efter film er oprettet
             })
             .catch(error => {
                 console.error("Fejl under oprettelsen af filmen:", error);
             });
 
+
         //----------------------------------------   EDIT MOVIE    ----------------------------------------------------------------------
 
-        // Håndter redigering af film
 
-        document.addEventListener('DOMContentLoaded', function () {
-            // Funktion til at hente filmene og vise dem i dropdown
-            function loadMoviesForEditing() {
-                fetch('http://localhost:8080/api/movie')
-                    .then(response => response.json())
-                    .then(movies => {
-                        const movieSelect = document.getElementById('editMovieSelect');
-                        movieSelect.innerHTML = '';  // Rens dropdown før ny indlæsning
 
-                        // Tilføj en standard ikke-valgbar option som første valg
-                        const defaultOption = document.createElement('option');
-                        defaultOption.value = '';
-                        defaultOption.text = '- Vælg en film -';
-                        defaultOption.disabled = true;
-                        defaultOption.selected = true;
-                        movieSelect.appendChild(defaultOption);
-
-                        // Tilføj filmene til dropdown
-                        movies.forEach(movie => {
-                            const option = document.createElement('option');
-                            option.value = movie.movieId;
-                            option.text = movie.title;
-                            movieSelect.appendChild(option);
-                        });
-                    })
-                    .catch(error => console.error('Fejl ved hentning af film:', error));
-            }
-
-            // Kald funktionen for at fylde dropdown, når siden indlæses
-            loadMoviesForEditing();
-
-            // Når en film vælges i dropdown, opdater formularen med filmens data
-            document.getElementById('editMovieSelect').addEventListener('change', function () {
-                const movieId = this.value;
-
-                if (movieId) {
-                    // Hent filmens data baseret på det valgte movieId
-                    fetch(`http://localhost:8080/api/movie/${movieId}`)
-                        .then(response => response.json())
-                        .then(movie => {
-                            // Fyld formularen med filmens oplysninger
-                            document.getElementById('movieId').value = movie.movieId;
-                            document.getElementById('editMovieTitle').value = movie.title;
-                            document.getElementById('editMovieDescription').value = movie.description;
-                            document.getElementById('editMovieGenre').value = movie.genre;
-                            document.getElementById('editMovieHours').value = Math.floor(movie.duration / 60);
-                            document.getElementById('editMovieMinutes').value = movie.duration % 60;
-                            document.getElementById('editMoviePGRating').value = movie.ageLimit;
-                            document.getElementById('editMovieImageUrl').value = movie.imageUrl;
-                        })
-                        .catch(error => console.error('Fejl ved hentning af filmdetaljer:', error));
-                }
-            });
-
-            // Håndter opdatering af film
-            document.getElementById('editMovieForm').addEventListener('submit', function (event) {
-                event.preventDefault();
-
-                const movieId = document.getElementById('movieId').value;
-                const movieTitle = document.getElementById('editMovieTitle').value;
-                const movieDescription = document.getElementById('editMovieDescription').value;
-                const movieGenre = document.getElementById('editMovieGenre').value;
-                const movieHours = document.getElementById('editMovieHours').value;
-                const movieMinutes = document.getElementById('editMovieMinutes').value;
-                const moviePGRating = document.getElementById('editMoviePGRating').value;
-                const imageUrl = document.getElementById('editMovieImageUrl').value;
-
-                // Konverter timer og minutter til samlet varighed i minutter
-                const movieDuration = parseInt(movieHours) * 60 + parseInt(movieMinutes);
-
-                const movieData = {
-                    title: movieTitle,
-                    description: movieDescription,
-                    genre: movieGenre,
-                    duration: movieDuration,
-                    ageLimit: moviePGRating,
-                    imageUrl: imageUrl
-                };
-
-                // PUT-anmodning til at opdatere filmen
-                fetch(`http://localhost:8080/api/movie/${movieId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(movieData)
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Filmen blev opdateret');
-                        alert('Film opdateret succesfuldt');
-                    })
-                    .catch(error => {
-                        console.error('Fejl ved opdatering af film:', error);
+        // Fetch movies from backend and update dropdown list
+        function fetchMoviesForEdit() {
+            fetch('http://localhost:8080/api/movie')
+                .then(response => response.json())
+                .then(movies => {
+                    console.log(movies);  // Tjek om du får filmene her
+                    const selectElement = document.getElementById('movieSelectEdit');
+                    selectElement.innerHTML = '';  // Rens dropdown før ny indlæsning
+                    movies.forEach(movie => {
+                        const option = document.createElement('option');
+                        option.value = movie.movieId;
+                        option.textContent = movie.title;
+                        selectElement.appendChild(option);
                     });
-            });
+                })
+                .catch(error => {
+                    console.error('Error fetching movies:', error);
+                });
+        }
+
+        fetchMoviesForEdit(); // Call function on page load
+
+        // Update form fields when a movie is selected
+        document.getElementById('movieSelectEdit').addEventListener('change', function () {
+            const movieId = this.value;
+
+            if (movieId) {
+                fetch(`http://localhost:8080/api/movie/${movieId}`)
+                    .then(response => response.json())
+                    .then(movie => {
+                        document.getElementById('movieId').value = movie.movieId;
+                        document.getElementById('editMovieTitle').value = movie.title;
+                        document.getElementById('editMovieDescription').value = movie.description;
+                        document.getElementById('editMovieGenre').value = movie.genre;
+                        document.getElementById('editMovieHours').value = Math.floor(movie.duration / 60);
+                        document.getElementById('editMovieMinutes').value = movie.duration % 60;
+                        document.getElementById('editMoviePGRating').value = movie.ageLimit;
+                        document.getElementById('editMovieImageUrl').value = movie.imageUrl;
+                    })
+                    .catch(error => console.error('Error fetching movie details:', error));
+            } else {
+                // If no movie is selected, clear form
+                document.getElementById('movieId').value = '';
+                document.getElementById('editMovieTitle').value = '';
+                document.getElementById('editMovieDescription').value = '';
+                document.getElementById('editMovieGenre').value = '';
+                document.getElementById('editMovieHours').value = '';
+                document.getElementById('editMovieMinutes').value = '';
+                document.getElementById('editMoviePGRating').value = '';
+                document.getElementById('editMovieImageUrl').value = '';
+            }
         });
+
+        // Handle movie update
+        document.getElementById('editMovieForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const movieId = document.getElementById('movieId').value;
+            const movieTitle = document.getElementById('editMovieTitle').value;
+            const movieDescription = document.getElementById('editMovieDescription').value;
+            const movieGenre = document.getElementById('editMovieGenre').value;
+            const movieHours = document.getElementById('editMovieHours').value;
+            const movieMinutes = document.getElementById('editMovieMinutes').value;
+            const moviePGRating = document.getElementById('editMoviePGRating').value;
+            const imageUrl = document.getElementById('editMovieImageUrl').value;
+
+            const movieDuration = parseInt(movieHours) * 60 + parseInt(movieMinutes);
+
+            const movieData = {
+                title: movieTitle,
+                description: movieDescription,
+                genre: movieGenre,
+                duration: movieDuration,
+                ageLimit: moviePGRating,
+                imageUrl: imageUrl
+            };
+
+            fetch(`http://localhost:8080/api/movie/${movieId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(movieData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Filmen opdateret!');
+                })
+                .catch(error => console.error('Error updating movie:', error));
+        });
+    });
 
         //------------------------------------- DELETE --------------------------------------------------
 
-        // Håndter sletning af film
-        // Eventlistener til at åbne modal for sletning af film
+// Variabel til at holde film-ID (hvis vi opdaterer)
+        let movieId = null;
+
+// Eventlistener til at åbne modal for sletning af film
         document.getElementById("deleteMovieButton").addEventListener("click", function () {
-            openDeleteMovieModal();
+            openDeleteMovieModal(); // Åbn modal for sletning af film
         });
 
 // Eventlistener til at lukke modal ved annullering
         document.getElementById("cancelDeleteMovieButton").addEventListener("click", function () {
-            closeDeleteMovieModal();
+            closeDeleteMovieModal(); // Luk modal
         });
 
-// Eventlistener til at lukke modal ved klik på overlay
+// Eventlistener til at lukke modal på baggrundsklik (overlay)
         document.getElementById("deleteMovieModalOverlay").addEventListener("click", function () {
-            closeDeleteMovieModal();
+            closeDeleteMovieModal(); // Luk modal ved klik på overlay
         });
 
-// Eventlistener til at slette film, når "Bekræft" trykkes
+// Eventlistener til at slette film når "Bekræft" trykkes
         document.getElementById("confirmDeleteMovieButton").addEventListener("click", function () {
             const selectedMovieId = document.getElementById("movieSelectDelete").value;
             if (selectedMovieId) {
-                deleteMovie(selectedMovieId);
+                deleteMovie(selectedMovieId);  // Kald deleteMovie med valgt film-ID
             }
         });
 
 // Funktion til at åbne modal og indlæse film i dropdown
         function openDeleteMovieModal() {
-            fetch(`http://localhost:8080/api/movie`)  // Fetch til film-API'en
+            fetch("http://localhost:8080/api/movie")
                 .then(response => response.json())
                 .then(movies => {
                     const movieSelect = document.getElementById("movieSelectDelete");
                     movieSelect.innerHTML = '';  // Rens dropdown før ny indlæsning
 
-                    // Tilføj en standard ikke-valgbar option som første valg
                     const defaultOption = document.createElement("option");
                     defaultOption.value = "";
                     defaultOption.text = "- Vælg en film -";
@@ -274,7 +268,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(error => console.error("Fejl ved hentning af film:", error));
         }
 
-
 // Funktion til at lukke modal og skjule overlay
         function closeDeleteMovieModal() {
             document.getElementById("deleteMovieModal").style.display = "none";
@@ -284,14 +277,41 @@ document.addEventListener('DOMContentLoaded', function () {
 // Funktion til at slette film
         async function deleteMovie(movieId) {
             try {
-                const response = await fetch(`http://localhost:8080/api/movie/${movieId}`, {method: 'DELETE'});  // Brug movieId i endpoint
+                const response = await fetch(`http://localhost:8080/api/movie/${movieId}`, {method: 'DELETE'});
                 if (!response.ok) throw new Error('Fejl ved sletning af film');
+
                 alert('Filmen blev slettet succesfuldt!');
-                closeDeleteMovieModal();
+                closeDeleteMovieModal();  // Luk modal
+                updateMovieDropdown();  // Opdater dropdown efter sletning
             } catch (error) {
                 console.error('Fejl ved sletning af film:', error);
                 alert('Der opstod en fejl ved sletning af filmen.');
             }
         }
-    });
-});
+
+// Funktion til at opdatere dropdown efter sletning
+        function updateMovieDropdown() {
+            fetch("http://localhost:8080/api/movie")
+                .then(response => response.json())
+                .then(movies => {
+                    const movieSelect = document.getElementById("movieSelectDelete");
+                    movieSelect.innerHTML = '';  // Rens dropdown før ny indlæsning
+
+                    const defaultOption = document.createElement("option");
+                    defaultOption.value = "";
+                    defaultOption.text = "- Vælg en film -";
+                    defaultOption.disabled = true;
+                    defaultOption.selected = true;
+                    movieSelect.appendChild(defaultOption);
+
+                    // Tilføj film til dropdown
+                    movies.forEach(movie => {
+                        const option = document.createElement("option");
+                        option.value = movie.movieId;
+                        option.text = movie.title;
+                        movieSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Fejl ved opdatering af film:", error));
+
+    }
