@@ -4,7 +4,7 @@
 
 #showings-container {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 kolonner */
+    grid-template-columns: repeat(7, 1fr);
     gap: 10px;
     margin-top: 20px;
     min-height: 300px;
@@ -36,20 +36,17 @@
 
 #showings-container {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
+    grid-template-columns: repeat(7, 1fr);
     gap: 20px;
     margin-top: 20px;
     padding: 20px;
-    background-color: #2b2b45; /* Match background */
+    background-color: transparent;
     border-radius: 10px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
 
 .showing {
-    background-color: #fff;
     padding: 10px;
     margin: 5px 0;
-    border: 1px solid black;
     border-radius: 6px;
     cursor: pointer;
     text-align: center;
@@ -76,7 +73,7 @@
 }
 
 .showing:hover {
-    transform: scale(1.05); /* Add a hover effect with slight scaling */
+    transform: scale(1.05);
 }
 
 
