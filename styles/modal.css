@@ -53,3 +53,39 @@
     background-color: rgba(0, 0, 0, 0.5); /* Mørkere overlay */
     z-index: 999;
 }
+
+#order-list-div ul li {
+    color: black;  /* Set text color to black */
+}
+
+#order-list-modal {
+    max-height: 70vh; /* Adjust the height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+#order-list-overlay-modal {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+#order-list-modal {
+    background-color: #fff;
+    margin: 0;  /* No margin needed with the centering method */
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%; /* Adjust width as needed */
+    max-width: 600px; /* Maximum width for modal */
+    position: fixed; /* Ensure it's fixed for consistent positioning */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Perfectly centers the modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure the modal is above the overlay */
+    max-height: 70vh; /* Ensure the modal doesn't get too tall */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
