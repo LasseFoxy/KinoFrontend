@@ -93,7 +93,7 @@
         };
 
         // POST-anmodning til at tilføje film
-        fetch('http://localhost:8080/api/movie', {
+        fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/movie', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -119,7 +119,7 @@
 
         // Fetch movies from backend and update dropdown list
         function fetchMoviesForEdit() {
-            fetch('http://localhost:8080/api/movie')
+            fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/movie')
                 .then(response => response.json())
                 .then(movies => {
                     console.log(movies);  // Tjek om du får filmene her
@@ -150,7 +150,7 @@
             const movieId = this.value;
 
             if (movieId) {
-                fetch(`http://localhost:8080/api/movie/${movieId}`)
+                fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/movie/${movieId}`)
                     .then(response => response.json())
                     .then(movie => {
                         document.getElementById('movieId').value = movie.movieId;
@@ -200,7 +200,7 @@
                 imageUrl: imageUrl
             };
 
-            fetch(`http://localhost:8080/api/movie/${movieId}`, {
+            fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/movie/${movieId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -245,7 +245,7 @@
 
 // Funktion til at åbne modal og indlæse film i dropdown
         function openDeleteMovieModal() {
-            fetch("http://localhost:8080/api/movie")
+            fetch("https://kind-river-087a56c03.5.azurestaticapps.net/api/movie")
                 .then(response => response.json())
                 .then(movies => {
                     const movieSelect = document.getElementById("movieSelectDelete");
@@ -281,7 +281,7 @@
 // Funktion til at slette film
         async function deleteMovie(movieId) {
             try {
-                const response = await fetch(`http://localhost:8080/api/movie/${movieId}`, {method: 'DELETE'});
+                const response = await fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/movie/${movieId}`, {method: 'DELETE'});
                 if (!response.ok) throw new Error('Fejl ved sletning af film');
 
                 alert('Filmen blev slettet succesfuldt!');
@@ -295,7 +295,7 @@
 
 // Funktion til at opdatere dropdown efter sletning
         function updateMovieDropdown() {
-            fetch("http://localhost:8080/api/movie")
+            fetch("https://kind-river-087a56c03.5.azurestaticapps.net/api/movie")
                 .then(response => response.json())
                 .then(movies => {
                     const movieSelect = document.getElementById("movieSelectDelete");
@@ -340,7 +340,7 @@
     });
 
     function openRemoveMoviesModal() {
-        fetch("http://localhost:8080/api/movie")
+        fetch("https://kind-river-087a56c03.5.azurestaticapps.net/api/movie")
             .then(response => response.json())
             .then(movies => {
                 const movieSelect = document.getElementById("movieSelectRemove");
@@ -374,7 +374,7 @@
 
     async function removeMovieWithoutOrders(movieId) {
         try {
-            const response = await fetch(`http://localhost:8080/api/showings/delete-by-movie/${movieId}`, { method: 'DELETE' });
+            const response = await fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/showings/delete-by-movie/${movieId}`, { method: 'DELETE' });
             if (!response.ok) throw new Error('Fejl ved sletning af film uden ordrer');
             alert('Filmvisninger uden billetter fjernet!');
             closeRemoveMoviesModal();

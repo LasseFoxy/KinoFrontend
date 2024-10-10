@@ -10,7 +10,7 @@ export class Tickets {
     fetchAndDisplaySeats() {
         const { theaterId, showingId } = this.bookingDetails;
 
-        fetch(`http://localhost:8080/api/seat/theater/${theaterId}`)
+        fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/seat/theater/${theaterId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Error fetching seats: ${response.status} ${response.statusText}`);
@@ -25,7 +25,7 @@ export class Tickets {
                     throw new Error('Invalid JSON response');
                 }
 
-                fetch(`http://localhost:8080/api/order/showing/${showingId}`)
+                fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/order/showing/${showingId}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`Error fetching orders: ${response.status} ${response.statusText}`);
@@ -165,7 +165,7 @@ export class Tickets {
             seatIds: seatIds
         };
 
-        fetch('http://localhost:8080/api/order', {
+        fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(orderPayload)

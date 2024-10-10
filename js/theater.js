@@ -18,7 +18,7 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
 
     // Skelne mellem oprettelse og opdatering
     const method = theaterId ? 'PUT' : 'POST';
-    const url = theaterId ? `http://localhost:8080/api/theater/${theaterId}` : 'http://localhost:8080/api/theater';
+    const url = theaterId ? `https://kind-river-087a56c03.5.azurestaticapps.net/api/theater/${theaterId}` : 'https://kind-river-087a56c03.5.azurestaticapps.net/api/theater';
 
     // Send request til backend API
     fetch(url, {
@@ -57,7 +57,7 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
 // Funktion til at indlæse data for en biografsal, når den skal opdateres
 function loadTheaterData(id) {
     // Hent data for en biografsal ved ID
-    fetch(`http://localhost:8080/api/theater/${id}`)
+    fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/theater/${id}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Fejl ved hentning af biografsal');
@@ -108,7 +108,7 @@ document.getElementById("confirmDeleteTheaterButton").addEventListener("click", 
 
 // Funktion til at åbne modal og indlæse biografsale i dropdown
 function openDeleteTheaterModal() {
-    fetch("http://localhost:8080/api/theater")
+    fetch("https://kind-river-087a56c03.5.azurestaticapps.net/api/theater")
         .then(response => response.json())
         .then(theaters => {
             const theaterSelect = document.getElementById("theaterSelectDelete");
@@ -145,7 +145,7 @@ function closeDeleteTheaterModal() {
 // Funktion til at slette biografsal
 async function deleteTheater(theaterId) {
     try {
-        const response = await fetch(`http://localhost:8080/api/theater/${theaterId}`, { method: 'DELETE' });
+        const response = await fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/theater/${theaterId}`, { method: 'DELETE' });
         if (!response.ok) throw new Error('Fejl ved sletning af biografsal');
         alert('Biografsal slettet succesfuldt!');
         closeDeleteTheaterModal();

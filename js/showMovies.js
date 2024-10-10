@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchAndDisplayMovies() {
     try {
-        const response = await fetch('http://localhost:8080/api/movie');
+        const response = await fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/movie');
         const movies = await response.json();
 
         const selectedGenre = document.getElementById('genre-filter').value;
@@ -38,7 +38,7 @@ async function fetchAndDisplayMovies() {
 
 async function fetchGenres() {
     try {
-        const response = await fetch('http://localhost:8080/api/movie');
+        const response = await fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/movie');
         const movies = await response.json();
         const genres = [...new Set(movies.map(movie => movie.genre))];
 
@@ -56,7 +56,7 @@ async function fetchGenres() {
 
 async function fetchAgeLimits() {
     try {
-        const response = await fetch('http://localhost:8080/api/movie');
+        const response = await fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/movie');
         const movies = await response.json();
         const ageLimits = [...new Set(movies.map(movie => movie.ageLimit))];
 

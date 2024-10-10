@@ -23,7 +23,7 @@ export class Confirmation {
             throw new Error('Invalid seat IDs');
         }
         const seatIdsParam = seatIds.join(',');
-        return fetch(`http://localhost:8080/api/seat/byIds?seatIds=${seatIdsParam}`)
+        return fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/seat/byIds?seatIds=${seatIdsParam}`)
             .then(response => response.json())
             .then(data => data)
             .catch(error => {
@@ -42,7 +42,7 @@ export class Confirmation {
             throw new Error('Invalid seat IDs');
         }
         const seatIdsParam = seatIds.join(',');
-        return fetch(`http://localhost:8080/api/seat/byIds?seatIds=${seatIdsParam}`)
+        return fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/seat/byIds?seatIds=${seatIdsParam}`)
             .then(response => response.json())
             .then(data => data)
             .catch(error => {
