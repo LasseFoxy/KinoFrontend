@@ -1,0 +1,6 @@
+{
+  "globalHeaders": {
+    "Access-Control-Allow-Origin": "https://kind-river-087a56c03.5.azurestaticapps.net",
+    "Access-Control-Allow-Methods": "GET, OPTIONS"
+  }
+}
