@@ -4,7 +4,6 @@ class OrdersManager {
         this.orders = [];
         this.isExtended = false;  // A flag to track if we are showing extended orders or not
         console.log("OrdersManager constructor called"); // Log when constructor is called
-        this.fetchAllOrders();
         this.initSearch();
     }
 
@@ -12,6 +11,7 @@ class OrdersManager {
     setExtended(isExtended) {
         this.isExtended = isExtended;  // true for extended orders, false for 7-day upcoming orders
         this.displayOrders();  // Re-display the orders based on this flag
+        this.fetchAllOrders();
     }
 
     // Fetch all orders from the API
