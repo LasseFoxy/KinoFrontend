@@ -95,7 +95,7 @@ function createUser() {
     // Show loading indicator or disable the form
     form.classList.add('loading');
 
-    fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/users/create', {
+    fetch('https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/users/create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

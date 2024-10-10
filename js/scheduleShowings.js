@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Load theaters from backend and populate the dropdown
     function loadTheaters() {
-        fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/theater')
+        fetch('https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/theater')
             .then(response => response.json())
             .then(theaters => populateSelect(theaterSelect, theaters, 'theaterId', 'name'))
             .catch(error => console.error('Error loading theaters:', error));
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Load movies from backend and populate the dropdown
     function loadMovies() {
-        fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/movie')
+        fetch('https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/movie')
             .then(response => response.json())
             .then(movies => populateSelect(movieSelect, movies, 'movieId', 'title'))
             .catch(error => console.error('Error loading movies:', error));
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!theaterId) return;
 
         const startDate = currentStartDate.toISOString().split('T')[0];
-        fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/showings/${theaterId}/available-showings?startDate=${startDate}`)
+        fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/showings/${theaterId}/available-showings?startDate=${startDate}`)
             .then(response => response.json())
             .then(showings => renderShowings(showings))
             .catch(error => console.error('Error loading showings:', error));
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (selectedShowings.size === 0) return alert('Vælg mindst én ledig showing.');
         if (!movieId) return alert('Vælg en film for at tilføje den til de valgte visninger.');
 
-        fetch(`https://kind-river-087a56c03.5.azurestaticapps.net/api/showings/${theaterId}/assign-movie/${movieId}`, {
+        fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/showings/${theaterId}/assign-movie/${movieId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(Array.from(selectedShowings)) // Send showing IDs as JSON

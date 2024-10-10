@@ -41,7 +41,7 @@ export class Movies {
     fetchAndDisplayMovies(selectedDate = null) {
         const dateToFetch = selectedDate || this.datePicker.value || new Date().toISOString().split('T')[0];
         this.moviesContainer.innerHTML = '';
-        fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/movie/movieDTOs')
+        fetch('https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/movie/movieDTOs')
             .then(response => response.json())
             .then(movies => {
                 movies.forEach(movie => this.displayMovie(movie, dateToFetch));

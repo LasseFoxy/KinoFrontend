@@ -17,7 +17,7 @@ class OrdersManager {
     // Fetch all orders from the API
     fetchAllOrders() {
         console.log("Fetching all orders from API..."); // Log API fetch start
-        fetch('https://kind-river-087a56c03.5.azurestaticapps.net/api/order')
+        fetch('https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net//api/order')
             .then(response => {
                 console.log(`API response received. Status: ${response.status}`);
                 if (!response.ok) {
