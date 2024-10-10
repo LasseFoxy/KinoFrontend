@@ -366,8 +366,24 @@
         <button id="prevWeekButton">Forrige uge</button>
         <button id="nextWeekButton">Næste uge</button>
 
-        <button id="addShowingsButton" class="admin-btn">Tilføj film til valgte visninger</button>
+        <button id="addShowingsButton" class="admin-btn">Tilføj visninger</button>
+
+        <button id="removeMoviesWithoutOrdersButton" class="btn btn-danger mt-3">Fjern film uden ordrer</button>
     </section>
+
+    <!-- Modal overlay (background) -->
+    <div id="removeMoviesModalOverlay" class="modal-overlay" style="display: none;"></div>
+
+    <!-- Modal for removing movies without orders -->
+    <div id="removeMoviesModal" class="modal">
+        <h2>Fjern Film Uden Ordrer</h2>
+        <label for="movieSelectRemove">Vælg en film:</label>
+        <select id="movieSelectRemove"></select>
+        <div class="modal-buttons">
+            <button id="confirmRemoveMovieButton" class="btn btn-success">Bekræft</button>
+            <button id="cancelRemoveMovieButton" class="btn btn-secondary">Annuller</button>
+        </div>
+    </div>
 
     <!-- Theater Section -->
     <section id="theater" class="view-content">
