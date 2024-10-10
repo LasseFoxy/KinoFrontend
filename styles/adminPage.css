@@ -1,30 +1,25 @@
-/* ---------- Admin Panel Styling ---------- */
 .admin-panel {
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 20px;
-    width: 40%; /* Container width */
+    width: 40%;
     margin: 20px auto;
-    background-color: rgb(49, 59, 94);
+    background: transparent;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     color: white;
 }
 
-/* Table inside admin panel */
 .admin-panel table {
-    width: 100%; /* Table takes up full width */
+    width: 100%;
     border-collapse: collapse;
 }
 
-/* Cells within the table */
 .admin-panel td {
     padding: 10px;
     vertical-align: middle;
 }
 
-/* Admin section titles (e.g., Sale, Film, Admin) */
 .admin-panel h3 {
     font-size: 18px;
     font-weight: bold;
@@ -32,32 +27,39 @@
     text-align: left;
 }
 
-/* ---------- Button Styling ---------- */
 .admin-btn-container {
     display: flex;
-    gap: 10px; /* Space between the buttons */
+    gap: 10px;
 }
 
-/* ---------- Admin Button Styling ---------- */
 .admin-btn {
     font-family: 'Roboto', sans-serif;
-    background-color: #a944dc;
+    background: linear-gradient(135deg, #ad8bea 0%, #6a36bf 100%);
     color: white;
     border: none;
-    padding: 10px;
-    margin-bottom: 15px;
-    width: auto; /* Use auto to ensure the width adjusts to the content */
-    min-width: 150px; /* Set a minimum width to avoid too small buttons */
+    padding-top: 10px;
+    line-height: 50px;
+    width: 150px;
     text-align: center;
     font-size: 15px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    display: inline-block; /* Ensure <a> behaves like <button> */
-    text-decoration: none; /* Remove underline from <a> */
-    box-sizing: border-box; /* Ensure padding is included in the width/height */
+    display: inline-block;
+    text-decoration: none;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+a.admin-btn {
+    background-color: #0f0f0f;
+    text-decoration: none;
+    text-align: center;
+    line-height: 50px;
+}
+
+a{margin-top: 0}
+
+
 
 .admin-btn:hover {
     background-color: #8734b8;

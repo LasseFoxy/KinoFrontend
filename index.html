@@ -34,7 +34,7 @@
     <!-- Home and tickets Section -->
     <section id="home" class="view-content">
         <header>
-            <h2>Film</h2>
+            <h2>Reserver Billetter</h2>
         </header>
         <div id="display-movies-seat-selector" class="container-visible">
             <div id="date-picker-container">
@@ -44,7 +44,7 @@
             <div id="reset-button-div">
                 <button id="reset-today-btn">Tilbage Til Idag</button>
             </div>
-            <div id="movies-container" class="movies-container">
+            <div id="movies-container" class="movies-container2">
             </div>
         </div>
 
@@ -139,7 +139,7 @@
             <div class="admin-section">
                 <h3>Ordrer</h3>
                 <div class="admin-btn-container">
-                    <button class="admin-btn" id="show-orders-button">Se Ordrer For Næste 7 Dage</button>
+                    <button class="admin-btn" id="show-orders-button">Næste 7 Dage</button>
                     <button class="admin-btn" id="show-extended-orders-button">Se Alle Ordrer</button>
                 </div>
             </div>
@@ -372,10 +372,9 @@
     <!-- Theater Section -->
     <section id="theater" class="view-content">
         <header>
-            <h2>Opret eller Opdater Biografsal</h2>
+            <h2>Opret Biografsal</h2>
         </header>
         <div class="form-container">
-            <h1 id="formTitle">Opret Biografsal</h1>
             <form id="theaterForm">
                 <input type="hidden" id="theaterId" name="theaterId" />
                 <div class="form-group">
@@ -409,6 +408,7 @@
         <div id="order-list-div">
             <p></p>  <!-- Modal content will be dynamically updated -->
         </div>
+    </div>
 
     <!-- Login Section -->
     <section id="login" class="view-content">
@@ -461,6 +461,5 @@
 <script src="/js/movieManagement.js" type="module"></script>
 <script src="/js/orderList.js" type="module"></script>
 <script src="/js/showMovies.js" type="module"></script>
-
 </body>
 </html>

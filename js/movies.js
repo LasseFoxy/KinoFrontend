@@ -76,10 +76,10 @@ export class Movies {
                 if (!showing.theaterName) {
                     return;
                 }
-                const formattedTime = showing.startTime.slice(0, 5).replace(":", " ");
+                const formattedTime = showing.startTime.slice(0, 5);
                 const showtimeButton = document.createElement('button');
                 showtimeButton.classList.add('showtime-button');
-                showtimeButton.innerText = `Vises klokken ${formattedTime} i ${showing.theaterName}`;
+                showtimeButton.innerText = `Klokken ${formattedTime} i ${showing.theaterName}`;
                 showtimeButton.dataset.startTime = showing.startTime;
                 showtimeButton.dataset.movie = movie.title;
                 showtimeButton.dataset.theaterId = showing.theaterId;

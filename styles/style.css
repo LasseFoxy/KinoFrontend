@@ -44,7 +44,7 @@ h6 {
     display: block;
     width: 100%;
     color: #333;
-    border: 1px solid rbg(180, 180, 180);
+    border: 1px solid rgb(180, 180, 180);
     background-color: white;
     padding: 1rem;
     border-radius: 0.25rem;
