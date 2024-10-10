@@ -319,3 +319,67 @@
                 .catch(error => console.error("Fejl ved opdatering af film:", error));
 
     }
+
+    document.getElementById("removeMoviesWithoutOrdersButton").addEventListener("click", function() {
+        openRemoveMoviesModal();
+    });
+
+    document.getElementById("cancelRemoveMovieButton").addEventListener("click", function() {
+        closeRemoveMoviesModal();
+    });
+
+    document.getElementById("removeMoviesModalOverlay").addEventListener("click", function() {
+        closeRemoveMoviesModal();
+    });
+
+    document.getElementById("confirmRemoveMovieButton").addEventListener("click", function() {
+        const selectedMovieId = document.getElementById("movieSelectRemove").value;
+        if (selectedMovieId) {
+            removeMovieWithoutOrders(selectedMovieId);
+        }
+    });
+
+    function openRemoveMoviesModal() {
+        fetch("http://localhost:8080/api/movie")
+            .then(response => response.json())
+            .then(movies => {
+                const movieSelect = document.getElementById("movieSelectRemove");
+                movieSelect.innerHTML = '';  // Clear dropdown before new loading
+
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.text = "- Vælg en film -";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                movieSelect.appendChild(defaultOption);
+
+                // Add movies to dropdown
+                movies.forEach(movie => {
+                    const option = document.createElement("option");
+                    option.value = movie.movieId;
+                    option.text = movie.title;
+                    movieSelect.appendChild(option);
+                });
+
+                document.getElementById("removeMoviesModal").style.display = "block";
+                document.getElementById("removeMoviesModalOverlay").style.display = "block"; // Show modal and overlay
+            })
+            .catch(error => console.error("Fejl ved hentning af film:", error));
+    }
+
+    function closeRemoveMoviesModal() {
+        document.getElementById("removeMoviesModal").style.display = "none";
+        document.getElementById("removeMoviesModalOverlay").style.display = "none";
+    }
+
+    async function removeMovieWithoutOrders(movieId) {
+        try {
+            const response = await fetch(`http://localhost:8080/api/showings/delete-by-movie/${movieId}`, { method: 'DELETE' });
+            if (!response.ok) throw new Error('Fejl ved sletning af film uden ordrer');
+            alert('Filmvisninger uden billetter fjernet!');
+            closeRemoveMoviesModal();
+        } catch (error) {
+            console.error('Fejl ved sletning af film uden ordrer:', error);
+            alert('Der opstod en fejl ved sletning af filmen.');
+        }
+    }
