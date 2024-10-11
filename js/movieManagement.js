@@ -104,7 +104,8 @@
         .then(response => response.json())
         .then(data => {
             alert('Filmen oprettet!');
-            fetchMoviesForEdit();  // Opdater dropdown efter filmoprettelse
+            fetchMoviesForEdit();
+            document.getElementById('addMovieForm').reset();
             window.location.href='#admin';
         })
         .catch(error => console.error('Fejl under oprettelsen af filmen:', error));
@@ -118,32 +119,40 @@
     });
 
         // Fetch movies from backend and update dropdown list
-        function fetchMoviesForEdit() {
-            fetch('http://localhost:8080/api/movie')
-                .then(response => response.json())
-                .then(movies => {
-                    console.log(movies);  // Tjek om du får filmene her
-                    const selectElement = document.getElementById('movieSelectEdit');
-                    selectElement.innerHTML = '';  // Rens dropdown før ny indlæsning
-                    if (movies.length > 0) {
-                        movies.forEach(movie => {
-                            const option = document.createElement('option');
-                            option.value = movie.movieId;
-                            option.textContent = movie.title;
-                            selectElement.appendChild(option);
-                        });
-                    } else {
-                        // Hvis ingen film findes, vis en placeholder
-                        const option = document.createElement('option');
-                        option.textContent = 'Ingen film tilgængelige';
-                        selectElement.appendChild(option);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching movies:', error);
-                });
-        }
+    function fetchMoviesForEdit() {
+        fetch('http://localhost:8080/api/movie')
+            .then(response => response.json())
+            .then(movies => {
+                const selectElement = document.getElementById('movieSelectEdit');
 
+                // Først tilføj placeholder (Vælg en film)
+                selectElement.innerHTML = '';  // Rens dropdown før ny indlæsning
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Vælg en film';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                selectElement.appendChild(defaultOption);
+
+                // Tilføj filmene til dropdown
+                if (movies.length > 0) {
+                    movies.forEach(movie => {
+                        const option = document.createElement('option');
+                        option.value = movie.movieId;
+                        option.textContent = movie.title;
+                        selectElement.appendChild(option);
+                    });
+                } else {
+                    // Hvis ingen film findes, vis en placeholder
+                    const option = document.createElement('option');
+                    option.textContent = 'Ingen film tilgængelige';
+                    selectElement.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching movies:', error);
+            });
+    }
 
         // Update form fields when a movie is selected
         document.getElementById('movieSelectEdit').addEventListener('change', function () {
@@ -210,6 +219,9 @@
                 .then(response => response.json())
                 .then(data => {
                     alert('Filmen opdateret!');
+                    document.getElementById('editMovieForm').reset();  // Ryd formularen
+                    fetchMoviesForEdit();  // Opdater dropdown
+                    window.location.href = '#admin';
                 })
                 .catch(error => console.error('Error updating movie:', error));
         });
