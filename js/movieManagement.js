@@ -104,7 +104,8 @@
         .then(response => response.json())
         .then(data => {
             alert('Filmen oprettet!');
-            fetchMoviesForEdit();  // Opdater dropdown efter filmoprettelse
+            fetchMoviesForEdit();
+            document.getElementById('addMovieForm').reset();
             window.location.href='#admin';
         })
         .catch(error => console.error('Fejl under oprettelsen af filmen:', error));
@@ -118,39 +119,47 @@
     });
 
         // Fetch movies from backend and update dropdown list
-        function fetchMoviesForEdit() {
-            fetch('https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/movie')
-                .then(response => response.json())
-                .then(movies => {
-                    console.log(movies);  // Tjek om du får filmene her
-                    const selectElement = document.getElementById('movieSelectEdit');
-                    selectElement.innerHTML = '';  // Rens dropdown før ny indlæsning
-                    if (movies.length > 0) {
-                        movies.forEach(movie => {
-                            const option = document.createElement('option');
-                            option.value = movie.movieId;
-                            option.textContent = movie.title;
-                            selectElement.appendChild(option);
-                        });
-                    } else {
-                        // Hvis ingen film findes, vis en placeholder
-                        const option = document.createElement('option');
-                        option.textContent = 'Ingen film tilgængelige';
-                        selectElement.appendChild(option);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching movies:', error);
-                });
-        }
+    function fetchMoviesForEdit() {
+        fetch('http://localhost:8080/api/movie')
+            .then(response => response.json())
+            .then(movies => {
+                const selectElement = document.getElementById('movieSelectEdit');
 
+                // Først tilføj placeholder (Vælg en film)
+                selectElement.innerHTML = '';  // Rens dropdown før ny indlæsning
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Vælg en film';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                selectElement.appendChild(defaultOption);
+
+                // Tilføj filmene til dropdown
+                if (movies.length > 0) {
+                    movies.forEach(movie => {
+                        const option = document.createElement('option');
+                        option.value = movie.movieId;
+                        option.textContent = movie.title;
+                        selectElement.appendChild(option);
+                    });
+                } else {
+                    // Hvis ingen film findes, vis en placeholder
+                    const option = document.createElement('option');
+                    option.textContent = 'Ingen film tilgængelige';
+                    selectElement.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching movies:', error);
+            });
+    }
 
         // Update form fields when a movie is selected
         document.getElementById('movieSelectEdit').addEventListener('change', function () {
             const movieId = this.value;
 
             if (movieId) {
-                fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/movie/${movieId}`)
+                fetch(`http://localhost:8080/api/movie/${movieId}`)
                     .then(response => response.json())
                     .then(movie => {
                         document.getElementById('movieId').value = movie.movieId;
@@ -200,7 +209,7 @@
                 imageUrl: imageUrl
             };
 
-            fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/movie/${movieId}`, {
+            fetch(`http://localhost:8080/api/movie/${movieId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -210,6 +219,9 @@
                 .then(response => response.json())
                 .then(data => {
                     alert('Filmen opdateret!');
+                    document.getElementById('editMovieForm').reset();  // Ryd formularen
+                    fetchMoviesForEdit();  // Opdater dropdown
+                    window.location.href = '#admin';
                 })
                 .catch(error => console.error('Error updating movie:', error));
         });
@@ -245,7 +257,7 @@
 
 // Funktion til at åbne modal og indlæse film i dropdown
         function openDeleteMovieModal() {
-            fetch("https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/movie")
+            fetch("http://localhost:8080/api/movie")
                 .then(response => response.json())
                 .then(movies => {
                     const movieSelect = document.getElementById("movieSelectDelete");
@@ -281,7 +293,7 @@
 // Funktion til at slette film
         async function deleteMovie(movieId) {
             try {
-                const response = await fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/movie/${movieId}`, {method: 'DELETE'});
+                const response = await fetch(`http://localhost:8080/api/movie/${movieId}`, {method: 'DELETE'});
                 if (!response.ok) throw new Error('Fejl ved sletning af film');
 
                 alert('Filmen blev slettet succesfuldt!');
@@ -295,7 +307,7 @@
 
 // Funktion til at opdatere dropdown efter sletning
         function updateMovieDropdown() {
-            fetch("https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/movie")
+            fetch("http://localhost:8080/api/movie")
                 .then(response => response.json())
                 .then(movies => {
                     const movieSelect = document.getElementById("movieSelectDelete");
@@ -340,7 +352,7 @@
     });
 
     function openRemoveMoviesModal() {
-        fetch("https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/movie")
+        fetch("http://localhost:8080/api/movie")
             .then(response => response.json())
             .then(movies => {
                 const movieSelect = document.getElementById("movieSelectRemove");
@@ -374,7 +386,7 @@
 
     async function removeMovieWithoutOrders(movieId) {
         try {
-            const response = await fetch(`https://kino-ebgghmcxe2h0eeeg.northeurope-01.azurewebsites.net/api/showings/delete-by-movie/${movieId}`, { method: 'DELETE' });
+            const response = await fetch(`http://localhost:8080/api/showings/delete-by-movie/${movieId}`, { method: 'DELETE' });
             if (!response.ok) throw new Error('Fejl ved sletning af film uden ordrer');
             alert('Filmvisninger uden billetter fjernet!');
             closeRemoveMoviesModal();
