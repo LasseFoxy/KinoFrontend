@@ -1,6 +1,9 @@
 // Variabel til at holde biografsals-ID (hvis vi opdaterer)
 let theaterId = null;
 
+// Hardcoded JWT token for testing (replace with actual token later)
+const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0dXNlciIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTcxNjIzOTAyMiwiZXhwIjoxODE2MjM5MDIyfQ.3-KrHbQtgFnjTa09mqUf0ISkKktTbseSBlSBcfU_Lz0'; // Add your actual JWT token here
+
 document.getElementById("theaterForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -24,6 +27,7 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
     fetch(url, {
         method: method,
         headers: {
+            'Authorization': `Bearer ${jwtToken}`,  // Ensure token is sent in the Authorization header
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(theaterData)
@@ -57,7 +61,11 @@ document.getElementById("theaterForm").addEventListener("submit", function(event
 // Funktion til at indlæse data for en biografsal, når den skal opdateres
 function loadTheaterData(id) {
     // Hent data for en biografsal ved ID
-    fetch(`http://localhost:8080/api/theater/${id}`)
+    fetch(`http://localhost:8080/api/theater/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${jwtToken}`  // Ensure token is sent in the Authorization header
+        }
+    })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Fejl ved hentning af biografsal');
@@ -108,7 +116,17 @@ document.getElementById("confirmDeleteTheaterButton").addEventListener("click", 
 
 // Funktion til at åbne modal og indlæse biografsale i dropdown
 function openDeleteTheaterModal() {
-    fetch("http://localhost:8080/api/theater")
+    fetch("http://localhost:8080/api/theater", {
+        headers: {
+            'Authorization': `Bearer ${jwtToken}`  // Ensure token is sent in the Authorization header
+        }
+    }).then(response => {
+        console.log('Response status:', response.status);  // Log the response status (e.g., 401)
+        if (!response.ok) {
+            throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
         .then(response => response.json())
         .then(theaters => {
             const theaterSelect = document.getElementById("theaterSelectDelete");
@@ -145,7 +163,12 @@ function closeDeleteTheaterModal() {
 // Funktion til at slette biografsal
 async function deleteTheater(theaterId) {
     try {
-        const response = await fetch(`http://localhost:8080/api/theater/${theaterId}`, { method: 'DELETE' });
+        const response = await fetch(`http://localhost:8080/api/theater/${theaterId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${jwtToken}`,  // Ensure token is sent in the Authorization header
+            }
+        });
         if (!response.ok) throw new Error('Fejl ved sletning af biografsal');
         alert('Biografsal slettet succesfuldt!');
         closeDeleteTheaterModal();
@@ -154,4 +177,3 @@ async function deleteTheater(theaterId) {
         alert('Der opstod en fejl ved sletning af biografsalen.');
     }
 }
-
